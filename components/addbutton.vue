@@ -1,5 +1,5 @@
 <template>
-  <input class="addbutton" type="button" @click="onClick" value="Add" />
+  <input class="addbutton col" type="button" @click="onClick" value="Add" />
 </template>
 
 <script>
@@ -9,7 +9,7 @@ export default {
   methods: {
     onClick() {
       // Let's warn the parent that a change was made
-      this.$emit("click", this);
+      this.$emit("clear");
       // update selected list with queued value
       this.$store.commit("donors/addQueued");
     }
@@ -22,8 +22,9 @@ export default {
   padding: 5px;
   margin: auto;
   border: 1px solid #eeeeee;
-  width: 50px;
-  height: 90%;
+  min-width: 30px;
+  max-height: 40px;
+  width: 5%;
   cursor: pointer;
 }
 </style>

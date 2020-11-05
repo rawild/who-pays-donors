@@ -1,22 +1,27 @@
 <template>
   <div class="donortag">
-    <h1>{{donor.name }}</h1>
-    <p>{{donor.total}}</p>
+    <h1>{{donor.Donor }}</h1>
+    {{"$"+donorTotal}}
   </div>
 </template>
 
 <script>
+import * as d3 from 'd3';
 export default {
   name: "donortag",
   props: {
-    donorid: {
-      type: Number,
+    donor: {
+      type: Object,
       required: true
     }
   },
   computed: {
-    donor() {
-      return this.$store.getters.getDonorInfoById(this.donorid);
+    donorTotal() {
+      if (this.$store.getters.getDonorInfoById(this.donor.Cluster_ID).total != null){
+        return d3.format("~s")(this.$store.getters.getDonorInfoById(this.donor.Cluster_ID).total);
+      } else{
+        return 0
+      }
     }
   },
   methods: {
@@ -25,19 +30,13 @@ export default {
 </script>
 
 <style>
-.addbutton {
-  padding: 5px;
-  margin: auto;
-  border: 1px solid #eeeeee;
-  width: 50px;
-  height: 90%;
-  cursor: pointer;
+.donortag {
+  width: 15%;
+}
+h1{
+  font-size: 1em;
 }
 </style>
 
 <style lang="scss">
-.addbutton:hover {
-  background-color: $primary-blue;
-  color: white;
-}
 </style>

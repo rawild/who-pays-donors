@@ -1,5 +1,6 @@
 <template>
-  <div class="autocomplete">
+<div class="searchbar flex-grid" >
+  <div class="autocomplete col" >
     <input
       type="text"
       @input="onChange"
@@ -23,6 +24,8 @@
         {{ result.Donor }}
       </li>
     </ul>
+  </div>
+  <addbutton @clear=onClear />
   </div>
 </template>
 
@@ -111,7 +114,12 @@ export default {
         this.isOpen = false;
         this.arrowCounter = -1;
       }
+    },
+    onClear() {
+      console.log("in clear")
+      this.search = "";
     }
+     
   },
   watch: {
     items: function(val, oldValue) {
@@ -135,10 +143,16 @@ export default {
 </script>
 
 <style>
+.searchbar {
+  min-width: 250px;
+  width: 100%;
+}
+
 .autocomplete {
   min-width: 200px;
-  width: 80%;
-  height: 50px;
+  width: 100%;
+  height: 70px;
+  flex: 4
 }
 
 .autocomplete-results {
@@ -148,6 +162,7 @@ export default {
   height: 150px;
   overflow: auto;
   width: 100%;
+  background-color: white;
 }
 
 .autocomplete-result {
@@ -158,7 +173,7 @@ export default {
 }
 .autocomplete input {
   margin: auto;
-  width: 95%;
+  width: 100%;
   height: 90%;
   border-bottom: 1px solid #eeeeee;
 }

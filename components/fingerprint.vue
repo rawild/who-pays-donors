@@ -1,10 +1,5 @@
 <template>
-    <div :class=divClass >
-        <p >
-        {{donor.Donor }}<br>{{ yearrange }}
-      </p>
-      
-    </div>
+  <div :class="divClass" :info="yearrange"></div>
 </template>
 
 <script>
@@ -18,18 +13,18 @@ export default {
       required: true
     },
     divClass: {
-    type: String,
-    required: true
+      type: String,
+      required: true
     }
   },
   data() {
     return {
-      width: 700,
-      height: 150,
+      width: 900,
+      height: 70,
       mapped: [],
       localDonor: [],
       x: "",
-      y: "",
+      y: ""
     };
   },
   computed: mapState({
@@ -40,8 +35,9 @@ export default {
   }),
   methods: {
     drawFingerprint() {
-      console.log("in draw");
-      this.localDonor = this.donorslist.filter(d => d.Cluster_ID == this.donor.Cluster_ID);
+      this.localDonor = this.donorslist.filter(
+        d => d.Cluster_ID == this.donor.Cluster_ID
+      );
       //get the right data
       let yearRange = this.yearrange;
       let data = this.localDonor.filter(d => {
@@ -65,7 +61,6 @@ export default {
         }
         return { candidate: d, amount: 0 };
       });
-       //console.log("localDonor", this.localDonor)
       // get the axes
       this.x = d3
         .scaleBand()
@@ -79,16 +74,16 @@ export default {
         .nice()
         .rangeRound([this.height, 0]);
 
-    let selector = ".fingerprint"+String(this.donor.Cluster_ID)
-    console.log("selector", d3.select(selector))
+      let selector = ".fingerprint" + String(this.donor.Cluster_ID);
+
       // make an svg
       let svg = d3
         .select(selector)
         .append("svg")
-        .attr("class", "barsvg"+this.donor.Cluster_ID)
+        .attr("class", "barsvg" + this.donor.Cluster_ID)
         .attr("width", this.width)
         .attr("height", this.height);
-        console.log("svg", svg)
+
       // add the rectangles
       let rects = svg
         .append("g")
@@ -100,11 +95,23 @@ export default {
         .attr("width", d => this.x.bandwidth())
         .attr("y", d => this.y(d.amount))
         .attr("height", d => this.y(0) - this.y(d.amount))
-        .attr("fill", this.primaryblue);
-     console.log("rects", rects)
+        .attr("fill", this.primaryblue)
+        .attr("class",d =>"can"+d.candidate)
+        .on("mouseover", e =>{
+            d3.selectAll("."+e.srcElement.getAttribute("class"))
+            .classed("barHighlighted", true)         
+        })
+        .on("mouseout", e => {
+            d3.selectAll(".barHighlighted")
+                .classed("barHighlighted", false)    
+        })
+        .on("click", e => {
+            this.$emit("dialog",e.srcElement.getAttribute("class"))
+        })
+
     },
     updateFingerprint() {
-        console.log("updating draw")
+      console.log("updating draw");
       let yearRange = this.yearrange;
       let data = this.localDonor.filter(d => {
         if (d.Contribution_Year >= yearRange[0]) {
@@ -127,9 +134,9 @@ export default {
         }
         return { candidate: d, amount: 0 };
       });
-
+       this.y.domain([0, d3.max(this.mapped, d => d.amount)])
       // make an svg
-      let svg = d3.select(".barsvg"+this.donor.Cluster_ID);
+      let svg = d3.select(".barsvg" + this.donor.Cluster_ID);
       svg.selectAll(".barg").remove();
       // add the rectangles
       let rects = svg
@@ -142,18 +149,32 @@ export default {
         .attr("width", d => this.x.bandwidth())
         .attr("y", d => this.y(d.amount))
         .attr("height", d => this.y(0) - this.y(d.amount))
-        .attr("fill", this.primaryblue);
+        .attr("fill", this.primaryblue)
+        .attr("class",d =>"can"+d.candidate)
+        .on("mouseover", e =>{
+            d3.selectAll("."+e.srcElement.getAttribute("class"))
+            .classed("barHighlighted", true)         
+        })
+        .on("mouseout", e => {
+            d3.selectAll(".barHighlighted")
+                .classed("barHighlighted", false)    
+        })
     },
+    
+    
   },
   mounted() {
-      this.drawFingerprint()
-    },
+    this.drawFingerprint();
+  },
   updated() {
-    this.updateFingerprint();
+      this.updateFingerprint();
   }
 };
 </script>
-<style>
-
-
+<style lang="scss">
+   .barHighlighted {
+        stroke: $primary-blue;
+        stroke-width: 3;
+        fill: $primary-grey;
+        }
 </style>
