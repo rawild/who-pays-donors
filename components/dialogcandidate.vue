@@ -26,7 +26,7 @@ export default {
       return this.$store.getters.getCandidateInfoById(this.candidate);
     },
     height() {
-      return this.candidateInfo.length * 70
+      return this.candidateInfo.donors.length * 40
     },
   },
   methods: {
@@ -38,13 +38,13 @@ export default {
       console.log("inDrawBar")
       this.y = d3
         .scaleBand()
-        .domain(d3.map(this.candidateInfo, d => d.donor.Donor))
+        .domain(d3.map(this.candidateInfo.donors, d => d.donor.Donor))
         .rangeRound([this.height, 0])
         .paddingInner(0.1);
 
       this.x = d3
         .scaleLinear()
-        .domain([0, d3.max(this.candidateInfo, d => d.total)])
+        .domain([0, d3.max(this.candidateInfo.donors, d => d.total)])
         .nice()
         .rangeRound([0, this.width]);
 
@@ -61,7 +61,7 @@ export default {
         .append("g")
         .attr("class", "barg")
         .selectAll("rect")
-        .data(this.candidateInfo)
+        .data(this.candidateInfo.donors)
         .join("rect")
         .attr("x", this.x(0))
         .attr("height", d => this.y.bandwidth())
@@ -71,7 +71,7 @@ export default {
     }
   },
   updated() {
-    if (this.candidateInfo.length > 0) {
+    if (this.candidateInfo.donors.length > 0) {
       this.drawBar();
     }
   }

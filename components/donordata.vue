@@ -37,6 +37,7 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('getDonorData')
+    this.$store.dispatch('getCandidateData')
   }
 
 };

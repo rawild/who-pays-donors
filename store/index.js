@@ -2,7 +2,8 @@ import * as d3 from "d3";
 export const state = () => ({
   primaryblue: "#214167",
   donorslist: [],
-  candidates: []
+  candidates: [],
+  candidateInfo: []
 });
 
 export const mutations = {
@@ -12,10 +13,8 @@ export const mutations = {
   setCandidates(state, candidates) {
     state.candidates = candidates;
   },
-  setCandidatesfromDonors(state, donors) {
-    let candidates = Array.from(d3.group(donors, d => d.Candidate_ID).keys());
-    candidates.sort(d3.ascending);
-    state.candidates = candidates;
+  setCandidateInfo(state, candidateInfo){
+    state.candidateInfo = candidateInfo;
   },
   getDonorData(state) {
     d3.csv("/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
@@ -49,9 +48,10 @@ export const getters = {
     return donor;
   },
   getCandidateInfoById: state => id => {
-    let selectedDonors = state.donors.selected.map(d => d.Cluster_ID)
+    let candidate = state.candidateInfo.filter(d => d.Elected_Id == id)[0]
+    let selectedDonors = state.donors.selected.map(d => d.Cluster_ID);
     let contributions = state.donorslist.filter(d => {
-      return selectedDonors.includes(d.Cluster_ID)
+      return selectedDonors.includes(d.Cluster_ID);
     });
     contributions = contributions.filter(d => d.Candidate_ID == id);
     contributions = contributions.filter(d => {
@@ -66,15 +66,15 @@ export const getters = {
       v => d3.sum(v, d => d.Total),
       d => d.Cluster_ID
     );
-    let candidateInfo = [];
-    for (let [key,value] of rollup ){
-      let donor = state.donors.options.filter(d=>d.Cluster_ID == key)
-      if  (donor.length > 0){
+    let candidateInfo = { candidate: candidate, donors: [] };
+    for (let [key, value] of rollup) {
+      let donor = state.donors.options.filter(d => d.Cluster_ID == key);
+      if (donor.length > 0) {
         let info = {
-            "donor": donor[0],
-            "total": value
-            }
-        candidateInfo.push(info)
+          donor: donor[0],
+          total: value
+        };
+        candidateInfo.donors.push(info);
       }
     }
     return candidateInfo;
@@ -84,10 +84,17 @@ export const getters = {
 export const actions = {
   getDonorData: ({ commit }) => {
     d3.csv("/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
-      let candidates = Array.from(d3.group(donors, d => d.Candidate_ID).keys());
-      candidates.sort(d3.ascending);
       commit("setDonors", donors);
+    });
+  },
+  getCandidateData: ({ commit }) => {
+    d3.csv("/Electeds_List_05_13.csv", d3.autoType).then(candidateInfo => {
+      let candidates = Array.from(
+        d3.group(candidateInfo, d => d.Elected_Id).keys()
+      );
+      candidates.sort(d3.ascending);
       commit("setCandidates", candidates);
+      commit("setCandidateInfo", candidateInfo);
     });
   }
 };
