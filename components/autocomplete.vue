@@ -47,7 +47,7 @@ export default {
       results: [],
       search: "",
       isLoading: false,
-      arrowCounter: 0,
+      arrowCounter: -1,
       options: []
     };
   },
@@ -116,7 +116,6 @@ export default {
       }
     },
     onClear() {
-      console.log("in clear")
       this.search = "";
     }
      

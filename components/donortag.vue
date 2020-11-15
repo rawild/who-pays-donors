@@ -1,12 +1,31 @@
 <template>
-  <div class="donortag">
-    <h1>{{donor.Donor }}</h1>
-    {{"$"+donorTotal}}
+  <div class="donortag" >
+    <div class="left">
+      <NuxtLink @click.native="openDonor" to="/donorfile">
+      <v-icon class="top" size="21px"  color="black" >
+        mdi-folder-text
+        </v-icon>
+      </NuxtLink>
+      <br>
+         <v-icon size="21px" color="black" @click="removeDonor">
+        mdi-trash-can
+        </v-icon>
+    </div>
+    <div class="right">
+      <h1>{{ donor.Donor }}</h1>
+      <div class="normal">{{ "$" + donorTotal }}</div>
+      <div class="normal">
+        {{
+          (donorInfo.recipients != null ? donorInfo.recipients : 0) +
+            " Recipients"
+        }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import * as d3 from 'd3';
+import * as d3 from "d3";
 export default {
   name: "donortag",
   props: {
@@ -16,27 +35,53 @@ export default {
     }
   },
   computed: {
+    donorInfo() {
+      return this.$store.getters.getDonorInfoById(this.donor.Cluster_ID);
+    },
     donorTotal() {
-      if (this.$store.getters.getDonorInfoById(this.donor.Cluster_ID).total != null){
-        return d3.format("~s")(this.$store.getters.getDonorInfoById(this.donor.Cluster_ID).total);
-      } else{
-        return 0
+      if (this.donorInfo != null) {
+        return d3.format(".4~s")(this.donorInfo.total);
       }
+      return 0;
     }
   },
   methods: {
+    removeDonor() {
+      this.$emit("removeDonor",this.donor.Cluster_ID)
+    },
+    openDonor() {
+      this.$store.dispatch("openDonor", this.donor)
+    }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .donortag {
-  width: 15%;
+  width: 30%;
+  text-align: left;
+  display:flex;
 }
-h1{
-  font-size: 1em;
+.left {
+  padding-right: 15px;
+  padding-top: 2px;
+  max-width:100px;
+}
+.right {
+  min-width:200px;
+}
+.top{
+  padding-bottom:10px;
+}
+.normal {
+  font-size:.7em;
+}
+h1 {
+  font-size: .9em;
+}
+a {
+  text-decoration: none;
 }
 </style>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

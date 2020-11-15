@@ -7,17 +7,22 @@
             who-pays-donors
           </h1>
         </div>
-        <div class="break" />
-        <controls />
-        <donordata />
+         <div class="break" />
+         <controls />
+          <donorfile />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-//import * as d3 from "d3";
-export default {};
+
+export default {
+transition: {
+    name: 'home'
+}
+
+};
 </script>
 
 <style>
@@ -57,8 +62,7 @@ export default {};
   min-width: 300px;
   flex-basis: 100%;
 }
-.break {
+.break{
   flex-basis: 100%;
 }
-
 </style>

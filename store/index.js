@@ -29,6 +29,10 @@ export const getters = {
   getDonorName: state => id => {
     return state.donors.options.find(d => d.Cluster_ID == id).Donor;
   },
+  getDonorById: state => id => {
+    let donor= state.donors.options.find(d => d.Cluster_ID == id)
+    return donor
+  },
   getDonorInfoById: state => id => {
     let contributions = state.donorslist.filter(d => d.Cluster_ID == id);
     contributions = contributions.filter(d => {
@@ -39,12 +43,13 @@ export const getters = {
       }
       return false;
     });
+    let recipients = d3.group(contributions, d=> d.Candidate_ID)
     let rollup = d3.rollup(
       contributions,
       v => d3.sum(v, d => d.Total),
       d => d.Cluster_ID
     );
-    let donor = { id: id, total: rollup.get(id) };
+    let donor = { id: id, total: rollup.get(id), recipients: recipients.size };
     return donor;
   },
   getCandidateInfoById: state => id => {
@@ -78,6 +83,23 @@ export const getters = {
       }
     }
     return candidateInfo;
+  },
+  getDonorContributionsbyId: state => id => {
+    let contributions = state.donorslist.filter(d => d.Cluster_ID == id);
+    return contributions
+  },
+  getDonationsInfo: state => {
+    let donationsInfo = d3.rollup(state.donorslist, v => {
+      let total = d3.sum(v, d=>d.Total)
+      let average = d3.mean(v, d=>d.Total)
+      let size = v.length
+      return {
+          total: total,
+          average: average,
+          size: size
+      }}, d=>d.Cluster_ID)
+    return donationsInfo
+  
   }
 };
 
@@ -96,5 +118,29 @@ export const actions = {
       commit("setCandidates", candidates);
       commit("setCandidateInfo", candidateInfo);
     });
+  },
+  openDonor: ({ getters, commit }, donor) => {
+    let contributions = getters.getDonorContributionsbyId(donor.Cluster_ID)
+    let donationsInfo = getters.getDonationsInfo
+    let donorArray = Array.from(donationsInfo)
+    donorArray.sort((a,b) => b[1].Total - a[1].Total)
+    let totalRank = donorArray.findIndex((x)=>x[0]== donor.Cluster_ID)
+    donorArray.sort((a,b) => b[1].average - a[1].average)
+    let averageRank = donorArray.findIndex((x)=>x[0] == donor.Cluster_ID)
+    let medianRecipients = d3.median(donorArray, d=>d[1].size)
+    let donorFile = {
+      donor: donor,
+      contributions: contributions,
+      donationsInfo: donationsInfo,
+      totalRank: totalRank,
+      averageRank: averageRank,
+      medianRecipients: medianRecipients
+    }
+    commit("file/setDonorFile", donorFile) 
+  },
+  loadTestFileInfo: ({getters, dispatch} ) =>{
+    let donor = getters.getDonorById(196)
+    dispatch('openDonor',donor)
   }
+
 };

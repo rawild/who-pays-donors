@@ -1,18 +1,10 @@
 <template>
   <div class="donordata">
-     <dialogcandidate :candidate=dialogcandidate />
-      <div class="controls flex-grid">
-        <div class="search col" >
-          <autocomplete />
-        </div>
-        <div class="slider col">
-          <yearslider />
-        </div>
-      </div>
+     <dialogcandidate v-show="dialogOpen" :candidate=dialogcandidate @closeDialog=closeDialog() />
        <div class="donorlist" v-for="donor in selectedDonors"
         :key="donor.Cluster_ID">
-        <donortag :donor="donor" />
-        <fingerprint :donor="donor" :divClass="'fingerprint'+donor.Cluster_ID" @dialog=showdialog($event) />
+        <donortag :donor="donor" @removeDonor=removeDonor($event) />
+        <fingerprint :donor="donor" :divClass="'slideLeft fingerprint'+donor.Cluster_ID" @dialog=showDialog($event) />
         </div>
     </div>
 </template>
@@ -25,15 +17,23 @@ export default {
   data() {
       return {
           dialogcandidate: "",
+          dialogOpen: false,
           }
       },
   computed: mapState({
     selectedDonors: state => state.donors.selected
   }),
   methods: {
-      showdialog(candidate){
+      showDialog(candidate){
             this.dialogcandidate=candidate.split("n")[1].split(" ")[0]
-          }
+            this.dialogOpen = !this.dialogOpen
+          },
+      closeDialog(){
+          this.dialogOpen = !this.dialogOpen
+      },
+      removeDonor(id) {
+          this.$store.commit("donors/removeSelected",id)
+      }
   },
   beforeMount() {
     this.$store.dispatch('getDonorData')
@@ -49,32 +49,14 @@ export default {
  min-height: 500px;
  margin: auto;
 }
-.controls {
-  width: 90%;
-  height: 150px;
-  max-width: 1000px;
-  margin: auto;
-}
-.flex-grid {
-  display: flex;
-  align-items: center;
-}
-.col {
-  flex: 1;
-}
-.search {
-    min-width: 50%;
-  display: flex;
-}
-.slider {
-    min-width: 50%;
-}
+
 .donorlist {
-    min-width: 90%;
+    min-width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 30px;
 }
+
 
 </style>
 

@@ -111,7 +111,6 @@ export default {
 
     },
     updateFingerprint() {
-      console.log("updating draw");
       let yearRange = this.yearrange;
       let data = this.localDonor.filter(d => {
         if (d.Contribution_Year >= yearRange[0]) {
@@ -159,6 +158,10 @@ export default {
             d3.selectAll(".barHighlighted")
                 .classed("barHighlighted", false)    
         })
+        .on("click", e => {
+            this.$emit("dialog",e.srcElement.getAttribute("class"))
+        })
+
     },
     
     
@@ -171,10 +174,16 @@ export default {
   }
 };
 </script>
+<style>
+    .slideLeft{
+      margin-left: -150px;
+    }
+</style>
 <style lang="scss">
    .barHighlighted {
         stroke: $primary-blue;
         stroke-width: 3;
         fill: $primary-grey;
+        cursor: pointer;
         }
 </style>
