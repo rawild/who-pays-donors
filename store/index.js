@@ -122,7 +122,7 @@ export const actions = {
       commit("setCandidateInfo", candidateInfo);
     });
   },
-  openDonor: ({ getters, commit }, donor) => {
+  openDonorFile: ({ getters, commit }, donor) => {
     let contributions = getters.getDonorContributionsbyId(donor.Cluster_ID)
     let donationsInfo = getters.getDonationsInfo
     let donorArray = Array.from(donationsInfo)

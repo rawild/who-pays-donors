@@ -4,7 +4,7 @@
       <div class="donorname">File: {{ donorFile.donor.Donor }}</div>
         <donortree  />
         <recipientbar />
-      <div class="recipientlist"></div>
+        <recipientlist />
     </div>
     <div v-else></div>
   </div>

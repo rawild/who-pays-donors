@@ -1,7 +1,7 @@
 <template>
   <div class="donortag" >
     <div class="left">
-      <NuxtLink @click.native="openDonor" to="/donorfile">
+      <NuxtLink @click.native="openDonorFile" to="/donorfile">
       <v-icon class="top" size="21px"  color="black" >
         mdi-folder-text
         </v-icon>
@@ -49,8 +49,8 @@ export default {
     removeDonor() {
       this.$emit("removeDonor",this.donor.Cluster_ID)
     },
-    openDonor() {
-      this.$store.dispatch("openDonor", this.donor)
+    openDonorFile() {
+      this.$store.dispatch("openDonorFile", this.donor)
     }
   }
 };
