@@ -52,9 +52,12 @@ export const getters = {
     let donor = { id: id, total: rollup.get(id), recipients: recipients.size };
     return donor;
   },
-  getCandidateInfoById: state => id => {
+  getCandidateInfoById: state => (id,donors) => {
+    if (donors == null) {
+      donors = state.donors.selected
+    }
     let candidate = state.candidateInfo.filter(d => d.Elected_Id == id)[0]
-    let selectedDonors = state.donors.selected.map(d => d.Cluster_ID);
+    let selectedDonors = donors.map(d => d.Cluster_ID);
     let contributions = state.donorslist.filter(d => {
       return selectedDonors.includes(d.Cluster_ID);
     });

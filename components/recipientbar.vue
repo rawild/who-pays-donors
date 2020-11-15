@@ -8,7 +8,24 @@
         {{ "Compared to Median:  " + this.medianRecipients }}
       </div>
     </div>
-    <div class="recipientbar">
+    <div class="flex-grid">
+      <div class="recipientbar"></div>
+      <div v-if="candidate.First_Name" class="recipientinfo">
+        {{ this.candidate.First_Name + " " + this.candidate.Last_Name }}
+        <br />
+        {{
+          this.candidate.County == "Statewide"
+            ? this.candidate.Role
+            : this.candidate.Role +
+              " District " +
+              this.candidate.District +
+              ", " +
+              this.candidate.County
+        }}
+        <br>
+        {{ "$" + this.candidate.amount }}
+      </div>
+      <div v-else />
     </div>
   </div>
 </template>
@@ -20,7 +37,8 @@ export default {
   data() {
     return {
       width: 600,
-      height: 350
+      height: 350,
+      candidate: {}
     };
   },
   computed: {
@@ -43,13 +61,13 @@ export default {
         );
       }
     },
-     primaryblue() {
-      return this.$store.state.primaryblue
+    primaryblue() {
+      return this.$store.state.primaryblue;
     }
   },
   methods: {
     drawRecipientBar() {
-      let margin = 20
+      let margin = 20;
       let contributionsRollup = d3.rollup(
         this.donorFile.contributions,
         v => d3.sum(v, d => d.Total),
@@ -64,52 +82,74 @@ export default {
           return d[1].get(key) != null ? d[1].get(key) : 0;
         })(contributionsRollup);
 
-    let svg = d3
+      let svg = d3
         .select(".recipientbar")
         .append("svg")
         .attr("width", this.width)
-        .attr("height", this.height)
-    
+        .attr("height", this.height);
 
       let xScale = d3
         .scaleBand()
-        .domain(Array.from(contributionsRollup.keys()).sort((a,b) => a-b))
+        .domain(Array.from(contributionsRollup.keys()).sort((a, b) => a - b))
         .rangeRound([0, this.width])
-        .paddingInner(0.1)
-      
-      let xAxis = d3.axisBottom(xScale).tickSize(0)
-      
+        .paddingInner(0.1);
+
+      let xAxis = d3.axisBottom(xScale).tickSize(0);
+
       let yScale = d3
         .scaleLinear()
         .domain([0, d3.max(contributionsRollup, v => d3.sum(v[1].values()))])
-        .rangeRound([this.height-margin, 0]);
-      let colorScale = d3.scaleSequential(d3.interpolateBlues).domain([1, 96])
-      
-      d3.selectAll("g.series").remove()
-      
-      let series= svg
+        .rangeRound([this.height - margin, 0]);
+      let colorScale = d3.scaleSequential(d3.interpolateBlues).domain([1, 96]);
+
+      d3.selectAll("g.series").remove();
+
+      let series = svg
         .append("g")
         .selectAll("g.series")
         .data(stackedContributions)
         .join("g")
         .classed("series", true)
-        .style('fill', d => colorScale(d.key))
-        
-        series
+        .attr("class", d => "candidate" + d.key)
+        .style("fill", d => colorScale(d.key));
+
+      series
         .selectAll("rect")
-        .data((d) => d)
+        .data(d => d)
         .join("rect")
         .attr("x", d => xScale(d.data[0]))
         .attr("y", d => yScale(d[1]))
         .attr("width", () => xScale.bandwidth())
-        .attr("height", d => yScale(d[0]) - yScale(d[1]));
+        .attr("height", d => yScale(d[0]) - yScale(d[1]))
+        .attr("amount", d => d[1]-d[0])
+        .on("mouseover", e => {
+          let key = e.srcElement.parentElement.__data__.key;
+          this.populateCandidate(key, e.srcElement.getAttribute("amount"));
+          d3.selectAll(".candidate" + key).classed("barHighlighted", true);
+        })
+        .on("mouseout", e => {
+          d3.selectAll(
+            ".candidate" + e.srcElement.parentElement.__data__.key
+          ).classed("barHighlighted", false);
+          this.populateCandidate("",0);
+        });
 
-     svg
+      svg
         .append("g")
         .classed("series", true)
-        .attr("transform", `translate(0,${this.height-margin+5})`)
+        .attr("transform", `translate(0,${this.height - margin + 5})`)
         .call(xAxis)
-        .call(g => g.select(".domain").remove())
+        .call(g => g.select(".domain").remove());
+    },
+    populateCandidate(candidateId, amount) {
+      if (candidateId == "") {
+        this.candidate = {};
+      } else {
+        this.candidate = this.$store.getters.getCandidateInfoById(candidateId, [
+          this.donorFile.donor
+        ]).candidate;
+        this.candidate.amount = d3.format(".4~s")(amount)
+      }
     }
   },
   mounted() {
@@ -118,4 +158,21 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.recipientbar {
+  width: 70%;
+}
+.recipientinfo {
+  width: 30%;
+}
+</style>
+
+<style lang="scss">
+.barHighlighted {
+  stroke: $primary-green;
+  stroke-width: 3;
+  fill: $primary-green;
+  fill-opacity: 0.5;
+  cursor: pointer;
+}
+</style>
