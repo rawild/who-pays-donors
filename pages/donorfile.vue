@@ -2,7 +2,14 @@
   <v-app>
     <v-main>
       <v-container fluid>
-        <div class="break" />
+        <div class="break"> 
+          <NuxtLink to="/">
+          <v-icon size="60px" color="black" >
+        mdi-chevron-left
+        </v-icon> 
+          </NuxtLink>
+        </div>
+
         <controls :button="button" />
         <donorfile />
       </v-container>
@@ -41,6 +48,12 @@ export default {
 
 .break {
   flex-basis: 100%;
+  text-align: left;
+  height: 40px;
+  padding: 20px;
+}
+a {
+  text-decoration: none;
 }
 </style>
 <style lang="scss">

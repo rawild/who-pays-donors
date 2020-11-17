@@ -62,7 +62,7 @@ export default {
           "+" + (this.recipients - this.donorFile.medianRecipients).toString()
         );
       } else if (this.recipients == this.donorFile.medianRecipients) {
-        return 0;
+        return "Same";
       } else if (this.recipients < this.donorFile.medianRecipients) {
         return (
           "-" + (this.donorFile.medianRecipients - this.recipients).toString()
