@@ -151,7 +151,8 @@ export default {
   min-width: 200px;
   width: 100%;
   height: 70px;
-  flex: 4
+  flex: 4;
+  padding: 10px;
 }
 
 .autocomplete-results {
@@ -174,7 +175,7 @@ export default {
   margin: auto;
   width: 100%;
   height: 90%;
-  border-bottom: 1px solid #eeeeee;
+  padding-left: 5px;
 }
 
 .autocomplete-result.is-active,
@@ -182,4 +183,9 @@ export default {
   background-color: #4aae9b;
   color: white;
 }
+</style>
+<style lang="scss">
+  .autocomplete input {
+    background-color: $primary-grey;
+  }
 </style>

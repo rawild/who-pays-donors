@@ -1,5 +1,7 @@
 <template>
-  <div class="recipientlist"></div>
+  <div class="donorsummary">
+    <div class="recipientlist"></div>
+  </div>
 </template>
 
 <script>
@@ -33,7 +35,10 @@ export default {
           this.donorFile.donor
         ]).candidate;
         d[1].splice(0, 0, candidate.First_Name + " " + candidate.Last_Name);
-        d[1].splice(1, 0, candidate.County == "Statewide"
+        d[1].splice(
+          1,
+          0,
+          candidate.County == "Statewide"
             ? candidate.Role
             : candidate.Role +
                 " District " +
@@ -41,8 +46,8 @@ export default {
                 ", " +
                 candidate.County
         );
-        d[1][2]=d3.format("$.4~s")(d[1][2])
-        d[1][3]=d3.format("$.4~s")(d[1][3])
+        d[1][2] = d3.format("$.4~s")(d[1][2]);
+        d[1][3] = d3.format("$.4~s")(d[1][3]);
       });
 
       let height = contributionsRollup.length * 50;
@@ -53,7 +58,8 @@ export default {
         "Max Amount",
         "Number of Donations"
       ];
-      console.log("contributionsRollup", contributionsRollup);
+
+      //Adapted from http://forrestcoward.github.io/examples/scrollable-table/index.html
       let outerTable = d3
         .select(".recipientlist")
         .append("table")
@@ -76,7 +82,6 @@ export default {
         .classed("scroll", true)
         .append("table")
         .classed("bodyTable", true)
-        .attr("border", 1)
         .attr("width", width)
         .attr("height", height)
         .attr("style", "table-layout:fixed");
@@ -92,9 +97,6 @@ export default {
         .data(d => d[1])
         .join("td")
         .text(d => d);
-
-      // TO DO: join the candidate data to the dononation data so there is the candidate name and position available
-      // and format the $ numbers
     }
   },
   mounted() {
@@ -103,21 +105,26 @@ export default {
 };
 </script>
 
-<style >
-
+<style>
 .recipientrow {
   max-height: 50px;
 }
 
-.headerTable th{
-    width:20%;
+.headerTable th {
+  width: 20%;
+  padding-bottom: 10px;
+}
+.headerTable {
+  border-bottom: 1px black solid;
 }
 
 .bodyTable tr:hover {
   background-color: grey;
 }
 
-
+.bodyTable tr {
+  background-color: white;
+}
 .scroll {
   overflow: scroll;
   max-height: 600px;

@@ -45,9 +45,12 @@ export default {
 
 <style>
 .donordata {
- width: 90%;
+ width: 95%;
  min-height: 500px;
- margin: auto;
+ margin-top: auto;
+ margin-bottom: auto;
+ margin-left: 1%;
+ margin-right: -7%;
 }
 
 .donorlist {
@@ -57,7 +60,11 @@ export default {
     margin-bottom: 30px;
 }
 
-
 </style>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .donordata {
+    background-color: $primary-blue;
+    padding: 40px;
+  }
+</style>

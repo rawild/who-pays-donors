@@ -1,29 +1,34 @@
 <template>
-  <div >
+  <div>
     <div v-if="candidateInfo.candidate" class="overlay" :info="candidateInfo">
       <div class="dialog">
         <div class="close">
-           <span class="closex" @click="sendClose" > x</span>
+          <span class="closex" @click="sendClose"> x</span>
+        </div>
+        <div class="infobox">
+          <div class="text">
+            <h1>
+              {{
+                this.candidateInfo.candidate.First_Name +
+                  " " +
+                  this.candidateInfo.candidate.Last_Name
+              }}
+            </h1>
+            <div>
+              {{
+                this.candidateInfo.candidate.District === "Statewide"
+                  ? this.candidateInfo.candidate.Role
+                  : "District: " +
+                    this.candidateInfo.candidate.District +
+                    ", " +
+                    this.candidateInfo.candidate.County
+              }}
+            </div>
+            <div>{{ "Total Receipts: $" + this.total }}</div>
           </div>
-      <div class="infobox">
-      <h1>
-        {{
-          this.candidateInfo.candidate.First_Name +
-            " " +
-            this.candidateInfo.candidate.Last_Name
-        }}
-      </h1>
-      <div>
-        {{
-            this.candidateInfo.candidate.District === "Statewide"?this.candidateInfo.candidate.Role:"District: "+this.candidateInfo.candidate.District +
-            ", " +
-            this.candidateInfo.candidate.County
-        }}
+          <svg class="dialogsvg" />
+        </div>
       </div>
-      <div>{{ "Total Receipts: $" + this.total }}</div>
-      <svg class="dialogsvg" />
-    </div>
-    </div>
     </div>
     <div v-else></div>
   </div>
@@ -41,7 +46,7 @@ export default {
   },
   data() {
     return {
-      width: 375,
+      width: 400,
       y: "",
       x: ""
     };
@@ -60,7 +65,7 @@ export default {
       return 0;
     },
     primaryblue() {
-      return this.$store.state.primaryblue
+      return this.$store.state.primaryblue;
     }
   },
   methods: {
@@ -70,7 +75,7 @@ export default {
     },
     drawBar() {
       let barSpace = 35;
-      let width = (this.width-barSpace*2)/2
+      let width = (this.width - barSpace * 2) / 2;
       this.y = d3
         .scaleBand()
         .domain(d3.map(this.candidateInfo.donors, d => d.donor.Donor))
@@ -106,7 +111,7 @@ export default {
       let yAxis = d3.axisLeft(this.y).tickSize(0);
       svg
         .append("g")
-        .attr("class","barg")
+        .attr("class", "barg")
         .attr("transform", `translate(${width},0)`)
         .call(yAxis)
         .call(g => g.select(".domain").remove())
@@ -119,11 +124,12 @@ export default {
         .data(this.candidateInfo.donors)
         .join("text")
         .attr("class", "label")
-        .attr("y", d => this.y(d.donor.Donor) + (this.y.bandwidth() / 2))
-        .attr("x", d => this.x(d.total) + barSpace);       
-       label.append("tspan")
-       .attr("x", d => this.x(d.total) + barSpace)
-       .text( d => "$"+ d3.format(".3s")(d.total))
+        .attr("y", d => this.y(d.donor.Donor) + this.y.bandwidth() / 2)
+        .attr("x", d => this.x(d.total) + barSpace);
+      label
+        .append("tspan")
+        .attr("x", d => this.x(d.total) + barSpace)
+        .text(d => "$" + d3.format(".3s")(d.total));
     },
     /// wrap funtion borrowed again from mBostock to wrap the tick labels
     wrap(text, width) {
@@ -137,8 +143,9 @@ export default {
           line = [],
           lineNumber = 0,
           lineHeight = 1.1, // ems
-          estLineNumber = text.text().length/20>1?text.text().length/20:0,
-          y = text.attr("y") - (estLineNumber * 5),
+          estLineNumber =
+            text.text().length / 20 > 1 ? text.text().length / 20 : 0,
+          y = text.attr("y") - estLineNumber * 5,
           dy = parseFloat(text.attr("dy")),
           tspan = text
             .text(null)
@@ -181,7 +188,7 @@ export default {
   width: 100%;
   margin: auto;
   max-height: 600px;
-  position: fixed; 
+  position: fixed;
   top: 10%;
   left: 30%;
   text-align: left;
@@ -190,7 +197,10 @@ export default {
   margin: auto;
   max-height: 100%;
   max-width: 100%;
-  padding: 5%;
+  padding: 30px;
+}
+.text {
+  margin-bottom: 1em;
 }
 .overlay {
   width: 100%;
@@ -201,10 +211,9 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
-
 
 .tick text {
   fill: black;
@@ -220,7 +229,6 @@ export default {
   cursor: pointer;
   font-weight: bold;
 }
-
 </style>
 
 <style lang="scss">
@@ -230,5 +238,11 @@ export default {
 .close {
   background-color: $primary-green;
   color: $primary-tan;
+}
+</style>
+
+<style scoped>
+h1 {
+  margin-bottom: .2em;
 }
 </style>

@@ -53,3 +53,15 @@ export default {
   width: 40%;
 }
 </style>
+<style lang="scss">
+  .v-input__slider {
+    background-color: $primary-grey;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    font-size: 12px;
+  }
+  .v-messages {
+    min-height: 1px;
+  }
+</style>

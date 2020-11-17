@@ -38,3 +38,4 @@ export default {
   min-width: 50%;
 }
 </style>
+

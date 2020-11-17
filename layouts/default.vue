@@ -59,4 +59,25 @@ html {
   color: #fff;
   background-color: #35495e;
 }
+
+.container {
+  margin-top:0%;
+  margin-right: 0%;
+  margin-bottom:0%;
+  margin-left: auto;
+  font-family: 'Cutive Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  line-height: 1.2;
+  padding: 0px;
+}
+</style>
+<style lang="scss">
+  .container {
+    background-color: $primary-green;
+  }
 </style>

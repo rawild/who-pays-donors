@@ -2,8 +2,8 @@
   <v-app>
     <v-main>
       <v-container fluid>
-        <div class="header">
-          <h1 class="title">
+        <div class="header dark">
+          <h1 class="title dark">
             who-pays-donors
           </h1>
         </div>
@@ -27,7 +27,6 @@ transition: {
 
 <style>
 .container {
-  margin: 0 auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -58,11 +57,15 @@ transition: {
 .links {
   padding-top: 15px;
 }
-.header {
-  min-width: 300px;
-  flex-basis: 100%;
-}
+
 .break{
   flex-basis: 100%;
 }
+</style>
+<style lang="scss" >
+.dark {
+  background-color: $primary-blue;
+  color: $primary-tan;
+}
+
 </style>

@@ -21,20 +21,27 @@ export default {
 .addbutton {
   padding: 5px;
   margin: auto;
-  border: 1px solid #eeeeee;
   min-width: 30px;
   max-width: 80px;
-  max-height: 40px;
+  min-height: 46px;
+  max-height: 100px;
   width: 5%;
   cursor: pointer;
 }
 </style>
 
 <style lang="scss">
+.addbutton {
+  background-color: $primary-blue;
+  color: $primary-grey;
+  font-weight: 1.2em;
+}
 
 .addbutton:hover {
-  background-color: $primary-blue;
-  color: white;
+  background-color: $primary-grey;
+  color: $primary-blue;
+  font-weight: 1.2em;
 }
+
 
 </style>

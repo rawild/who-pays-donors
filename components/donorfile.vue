@@ -1,10 +1,10 @@
 <template>
-  <div class="donordata">
+  <div class="donorfile">
     <div v-if="donorFile.donor">
       <div class="donorname">File: {{ donorFile.donor.Donor }}</div>
-        <donortree  />
-        <recipientbar />
-        <recipientlist />
+      <donortree />
+      <recipientbar />
+      <recipientlist />
     </div>
     <div v-else></div>
   </div>
@@ -19,36 +19,27 @@ export default {
     return {};
   },
   computed: {
-    donorFile() { return this.$store.state.file.donorFile },
+    donorFile() {
+      return this.$store.state.file.donorFile;
+    },
     options() {
-        if (this.$store.state.donors.options.length > 0) {
-            return true
-        } else {
-            return false
-        }
+      if (this.$store.state.donors.options.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {},
-  beforeMount(){
-    this.$store.dispatch('getCandidateData')
-    this.$store.dispatch('getDonorData')
-  },
-
+  beforeMount() {
+    this.$store.dispatch("getCandidateData");
+    this.$store.dispatch("getDonorData");
+  }
 };
 </script>
 
 <style>
-.donordata {
-  width: 90%;
-  min-height: 500px;
-  margin: auto;
-}
-.controls {
-  width: 90%;
-  height: 150px;
-  max-width: 1000px;
-  margin: auto;
-}
+
 .flex-grid {
   display: flex;
   align-items: center;
@@ -58,4 +49,36 @@ export default {
 }
 </style>
 
-<style lang="scss"></style>
+<style lang="scss">
+.donorfile {
+  background-color: $primary-tan;
+  width: 95%;
+  min-height: 500px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 1%;
+  margin-right: -6%;
+  padding: 40px;
+  font-weight: bold;
+}
+.donorsummary {
+  background-color: $primary-grey;
+  padding: 20px;
+  border-radius: 25px;
+  margin-right: -7%;
+  margin-bottom: 50px;
+  margin-left: 7%;
+  border: 3px black solid;
+}
+.donorname {
+  background-color: $primary-grey;
+  padding: 20px;
+  border: 3px black solid;
+  margin-top: 50px;
+  margin-right: -7%;
+  margin-bottom: 50px;
+  margin-left: 7%;
+  font-size: 1.5em;
+  text-align: left;
+}
+</style>

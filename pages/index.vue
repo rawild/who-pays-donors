@@ -21,17 +21,6 @@ export default {};
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  flex-wrap: wrap;
-  line-height: 1.2;
-}
-
 .title {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -53,12 +42,20 @@ export default {};
 .links {
   padding-top: 15px;
 }
-.header {
-  min-width: 300px;
-  flex-basis: 100%;
-}
 .break {
   flex-basis: 100%;
 }
+</style>
 
+<style lang="scss">
+.header {
+  background-color: $primary-tan;
+  margin-top: 0%;
+  width: 95%;
+  margin-left: 1%;
+  margin-right: -7%;
+  flex-basis: 100%;
+  min-height: 100px;
+  min-width: 300px;
+}
 </style>

@@ -120,8 +120,8 @@ export default {
 </style>
 
 <style>
-.donorsummary {
-  width: 90%;
+.donortreemap{
+  padding: 10px;
 }
 .sectionheader {
     text-align: left;

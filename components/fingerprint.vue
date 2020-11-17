@@ -178,6 +178,7 @@ export default {
     .slideLeft{
       margin-left: -150px;
     }
+   
 </style>
 <style lang="scss">
    .barHighlighted {
@@ -186,4 +187,10 @@ export default {
         fill: $primary-grey;
         cursor: pointer;
         }
+
+    .donorlist {
+      background-color: $primary-grey;
+      padding: 10px;
+      border-radius: 15px;
+    }
 </style>
