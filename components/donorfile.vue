@@ -74,11 +74,11 @@ export default {
   background-color: $primary-grey;
   padding: 20px;
   border: 3px black solid;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-right: -7%;
   margin-bottom: 50px;
   margin-left: 7%;
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: left;
 }
 </style>
