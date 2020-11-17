@@ -14,9 +14,16 @@ export default {
       height: 600
     };
   },
-  computed: {
-    donorFile() {
-      return this.$store.state.file.donorFile;
+  watch: {
+    donorFile: function(){
+      this.drawTable()
+    }
+  },
+  props: {
+    donorFile: {
+      type: Object,
+      required: false,
+      default: {}
     }
   },
   methods: {
@@ -58,7 +65,7 @@ export default {
         "Max Amount",
         "Number of Donations"
       ];
-
+      d3.select(".recipientlist").select("table").remove()
       //Adapted from http://forrestcoward.github.io/examples/scrollable-table/index.html
       let outerTable = d3
         .select(".recipientlist")
@@ -101,7 +108,8 @@ export default {
   },
   mounted() {
     this.drawTable();
-  }
+  },
+ 
 };
 </script>
 

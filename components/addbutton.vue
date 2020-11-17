@@ -1,17 +1,33 @@
 <template>
-  <input class="addbutton col" type="button" @click="onClick" value="Add" />
+  <input class="addbutton col" type="button" @click="onClick" :value="this.type" />
 </template>
 
 <script>
 export default {
   name: "addbutton",
-  props: {},
+  props: {
+    type: {
+      type: String,
+      required: false,
+      default: "Add"
+    }
+  },
+  computed: {
+    donor() {
+      return this.$store.state.donors.queued
+    }
+  },
   methods: {
     onClick() {
       // Let's warn the parent that a change was made
       this.$emit("clear");
+
+      if (this.type == "Add") {
       // update selected list with queued value
       this.$store.commit("donors/addQueued");
+      } else if (this.type == "Open") {
+        this.$store.dispatch("openDonorFile", this.donor)
+      }
     }
   }
 };

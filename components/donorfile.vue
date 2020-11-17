@@ -1,10 +1,10 @@
 <template>
   <div class="donorfile">
-    <div v-if="donorFile.donor">
+    <div v-if="donorFile.donor" info="donorFile.donor">
       <div class="donorname">File: {{ donorFile.donor.Donor }}</div>
-      <donortree />
-      <recipientbar />
-      <recipientlist />
+      <donortree :donorFile="this.donorFile" />
+      <recipientbar :donorFile="this.donorFile" />
+      <recipientlist :donorFile="this.donorFile" />
     </div>
     <div v-else></div>
   </div>
@@ -14,7 +14,8 @@
 import { mapState } from "vuex";
 export default {
   name: "donorfile",
-  props: {},
+  props: {
+  },
   data() {
     return {};
   },
@@ -65,7 +66,7 @@ export default {
   background-color: $primary-grey;
   padding: 20px;
   border-radius: 25px;
-  margin-right: -7%;
+  margin-right: -6%;
   margin-bottom: 50px;
   margin-left: 7%;
   border: 3px black solid;

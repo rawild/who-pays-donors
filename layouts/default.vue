@@ -6,15 +6,8 @@
 
 <style>
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -61,11 +54,11 @@ html {
 }
 
 .container {
-  margin-top:0%;
+  margin-top: 0%;
   margin-right: 0%;
-  margin-bottom:0%;
+  margin-bottom: 0%;
   margin-left: auto;
-  font-family: 'Cutive Mono', monospace;
+  font-family: "Cutive Mono", monospace;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -77,7 +70,16 @@ html {
 }
 </style>
 <style lang="scss">
-  .container {
-    background-color: $primary-green;
-  }
+.container {
+  background-color: $primary-green;
+}
+.header {
+  margin-top: 0%;
+  width: 95%;
+  margin-left: 1%;
+  margin-right: -7%;
+  flex-basis: 100%;
+  min-height: 200px;
+  min-width: 300px;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="donorsummary">
+  <div class="donorsummary" >
     <div class="flex-grid">
       <div class="left col">
         {{ "Number of Recipients: " + this.recipients }}
@@ -11,8 +11,7 @@
     <div class="flex-grid">
       <div class="recipientbar"></div>
       <div v-if="candidate.First_Name" class="recipientinfo">
-        {{ this.candidate.First_Name + " " + this.candidate.Last_Name }}
-        <br />
+       <div class="bold"> {{ this.candidate.First_Name + " " + this.candidate.Last_Name }}</div>
         {{
           this.candidate.County == "Statewide"
             ? this.candidate.Role
@@ -41,10 +40,19 @@ export default {
       candidate: {}
     };
   },
+  watch: {
+    donorFile: function(){
+      this.drawRecipientBar()
+    }
+  },
+  props: {
+    donorFile: {
+      type: Object,
+      required: false,
+      default: {}
+    }
+  },
   computed: {
-    donorFile() {
-      return this.$store.state.file.donorFile;
-    },
     recipients() {
       return d3.group(this.donorFile.contributions, d => d.Candidate_ID).size;
     },
@@ -81,7 +89,7 @@ export default {
         .value((d, key) => {
           return d[1].get(key) != null ? d[1].get(key) : 0;
         })(contributionsRollup);
-
+      d3.select(".recipientbar").selectAll("svg").remove()
       let svg = d3
         .select(".recipientbar")
         .append("svg")
@@ -154,7 +162,7 @@ export default {
   },
   mounted() {
     this.drawRecipientBar();
-  }
+  },
 };
 </script>
 
@@ -164,6 +172,12 @@ export default {
 }
 .recipientinfo {
   width: 30%;
+  text-align: left;
+}
+
+.bold {
+  font-weight: 1500;
+  font-size: 1.3em;
 }
 </style>
 

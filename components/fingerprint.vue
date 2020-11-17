@@ -192,5 +192,6 @@ export default {
       background-color: $primary-grey;
       padding: 10px;
       border-radius: 15px;
+      overflow: auto;
     }
 </style>

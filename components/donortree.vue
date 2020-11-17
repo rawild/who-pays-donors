@@ -41,10 +41,19 @@ export default {
       height: 350
     };
   },
+  watch: {
+    donorFile: function(){
+      this.drawTreemap()
+    }
+  },
+  props: {
+    donorFile: {
+      type: Object,
+      required: false,
+      default: {}
+    }
+  },
   computed: {
-    donorFile() {
-      return this.$store.state.file.donorFile;
-    },
     total() {
       if (this.donorFile.donor != null) {
         let summary = this.donorFile.donationsInfo.get(
@@ -78,6 +87,7 @@ export default {
         .padding(1)
         .round(true);
       tree(root);
+      d3.select(".treemap").selectAll("g").remove()
       let svg = d3
         .select(".treemap")
         .attr("width", this.width)

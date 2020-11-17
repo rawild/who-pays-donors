@@ -1,31 +1,35 @@
 <template>
-<div class="searchbar flex-grid" >
-  <div class="autocomplete col" >
-    <input
-      type="text"
-      @input="onChange"
-      v-model="search"
-      @keydown.down="onArrowDown"
-      @keydown.up="onArrowUp"
-      @keydown.enter="onEnter"
-    />
-    <ul id="autocomplete-results" v-show="isOpen" class="autocomplete-results">
-      <li class="loading" v-if="isLoading">
-        Loading results...
-      </li>
-      <li
-        v-else
-        v-for="(result, i) in results"
-        :key="result.Cluster_ID"
-        @click="setResult(result)"
-        class="autocomplete-result"
-        :class="{ 'is-active': i === arrowCounter }"
+  <div class="searchbar flex-grid">
+    <div class="autocomplete col">
+      <input
+        type="text"
+        @input="onChange"
+        v-model="search"
+        @keydown.down="onArrowDown"
+        @keydown.up="onArrowUp"
+        @keydown.enter="onEnter"
+      />
+      <ul
+        id="autocomplete-results"
+        v-show="isOpen"
+        class="autocomplete-results"
       >
-        {{ result.Donor }}
-      </li>
-    </ul>
-  </div>
-  <addbutton @clear=onClear />
+        <li class="loading" v-if="isLoading">
+          Loading results...
+        </li>
+        <li
+          v-else
+          v-for="(result, i) in results"
+          :key="result.Cluster_ID"
+          @click="setResult(result)"
+          class="autocomplete-result"
+          :class="{ 'is-active': i === arrowCounter }"
+        >
+          {{ result.Donor }}
+        </li>
+      </ul>
+    </div>
+    <addbutton :type="this.button" @clear="onClear" />
   </div>
 </template>
 
@@ -34,10 +38,10 @@ import * as d3 from "d3";
 export default {
   name: "autocomplete",
   props: {
-    isAsync: {
-      type: Boolean,
+    button: {
+      type: String,
       required: false,
-      default: false
+      default: "Add"
     }
   },
 
@@ -62,14 +66,9 @@ export default {
       // Let's warn the parent that a change was made
       this.$emit("input", this);
 
-      // Is the data given by an outside ajax request?
-      if (this.isAsync) {
-        this.isLoading = true;
-      } else {
-        // Let's  our flat array
-        this.filterResults();
-        this.isOpen = true;
-      }
+      // Let's  our flat array
+      this.filterResults();
+      this.isOpen = true;
     },
     filterResults() {
       // first uncapitalize all the things
@@ -118,7 +117,6 @@ export default {
     onClear() {
       this.search = "";
     }
-     
   },
   watch: {
     items: function(val, oldValue) {
@@ -130,7 +128,7 @@ export default {
     }
   },
   beforeMount() {
-    this.$store.dispatch('donors/loadOptions')
+    this.$store.dispatch("donors/loadOptions");
   },
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
@@ -185,7 +183,7 @@ export default {
 }
 </style>
 <style lang="scss">
-  .autocomplete input {
-    background-color: $primary-grey;
-  }
+.autocomplete input {
+  background-color: $primary-grey;
+}
 </style>

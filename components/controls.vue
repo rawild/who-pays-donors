@@ -1,7 +1,7 @@
 <template>
     <div class="controls flex-grid">
           <div class="search col">
-            <autocomplete />
+            <autocomplete :button="this.button" />
           </div>
           <div class="slider col">
             <yearslider />
@@ -12,6 +12,13 @@
 <script>
 export default {
   name: "controls",
+  props: {
+      button: {
+        type: String,
+        required: false,
+        default: "Add"
+    }
+  }
 }
 </script>
 
