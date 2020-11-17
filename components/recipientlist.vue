@@ -74,8 +74,6 @@ export default {
         .append("td")
         .append("div")
         .classed("scroll", true)
-        .attr("width", width)
-        .attr("height", this.height)
         .append("table")
         .classed("bodyTable", true)
         .attr("border", 1)
@@ -105,26 +103,24 @@ export default {
 };
 </script>
 
-<style scoped>
-td {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
+<style >
 
 .recipientrow {
   max-height: 50px;
 }
 
-tr:hover {
+.headerTable th{
+    width:20%;
+}
+
+.bodyTable tr:hover {
   background-color: grey;
 }
 
-th:hover {
-  background-color: grey;
-}
 
 .scroll {
-  overflow: auto;
+  overflow: scroll;
+  max-height: 600px;
+  width: 100%;
 }
 </style>
