@@ -33,8 +33,8 @@ export default {
   },
   methods: {},
   beforeMount() {
-    this.$store.dispatch("getCandidateData");
-    this.$store.dispatch("getDonorData");
+    /*this.$store.dispatch("getCandidateData");
+    this.$store.dispatch("getDonorData");*/
   }
 };
 </script>
