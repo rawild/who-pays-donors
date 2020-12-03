@@ -6,7 +6,7 @@
           <NuxtLink to="/">
           <v-icon size="60px" color="black" >
         mdi-chevron-left
-        </v-icon> 
+        </v-icon> Back to List
           </NuxtLink>
         </div>
 
@@ -51,9 +51,14 @@ export default {
   text-align: left;
   height: 40px;
   padding: 20px;
+  color: black;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 30px;
 }
 a {
   text-decoration: none;
+  color: black !important;
+  cursor: pointer
 }
 </style>
 <style lang="scss">

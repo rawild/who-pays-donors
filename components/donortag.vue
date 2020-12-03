@@ -40,7 +40,9 @@ export default {
     },
     donorTotal() {
       if (this.donorInfo != null) {
-        return d3.format(".4~s")(this.donorInfo.total);
+        if (this.donorInfo.total != null) {
+          return d3.format(".4~s")(this.donorInfo.total);
+        }
       }
       return 0;
     }

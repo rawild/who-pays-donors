@@ -5,11 +5,14 @@
       :candidate="dialogcandidate"
       @closeDialog="closeDialog()"
     />
-    <div v-if="candidate" class="candidate">
-      Recipient:
-      <br>
-      <div class="bold">{{candidate.First_Name+" "+candidate.Last_Name}}</div>
-      {{
+    <div v-if="candidate" class="candidate flex-grid">
+      <div class="col">
+        Recipient:
+        <br />
+        <div class="bold">
+          {{ candidate.First_Name + " " + candidate.Last_Name }}
+        </div>
+        {{
           this.candidate.County == "Statewide"
             ? this.candidate.Role
             : this.candidate.Role +
@@ -17,10 +20,18 @@
               this.candidate.District +
               ", " +
               this.candidate.County
-        }}<br>
-        *click on bar to compare donation amounts
+        }}<br />
       </div>
-      <div v-else class="candidate">Add donors below and hover over bars to view recipients</div>
+      <div class="col">
+        Click on a bar to compare donation amounts.<br>
+        Use the <v-icon size="21px"  color="black" >
+        mdi-folder-text
+        </v-icon> to open a donor file.
+      </div>
+    </div>
+    <div v-else class="candidate">
+      Add donors below and hover over bars to view recipients
+    </div>
     <div
       class="donorlist"
       v-for="donor in selectedDonors"
@@ -63,11 +74,11 @@ export default {
     removeDonor(id) {
       this.$store.commit("donors/removeSelected", id);
     },
-    showCandidate(candidate){
-      this.candidate = this.$store.getters.getCandidateName(candidate.split("n")[1].split(" ")[0])
-      console.log(this.candidate)
+    showCandidate(candidate) {
+      this.candidate = this.$store.getters.getCandidateName(
+        candidate.split("n")[1].split(" ")[0]
+      );
     }
-    
   }
 };
 </script>
@@ -93,11 +104,11 @@ export default {
   min-height: 400px;
 }
 .candidate {
-  min-height:50px;
+  min-height: 50px;
   width: 100%;
-  background-color:$primary-grey;
+  background-color: $primary-grey;
   margin-bottom: 10px;
   text-align: left;
-  padding: 20px;
+  padding: 5px;
 }
 </style>

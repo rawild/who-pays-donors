@@ -169,6 +169,7 @@ export default {
 <style scoped>
 .recipientbar {
   width: 70%;
+  text-align: left
 }
 .recipientinfo {
   width: 30%;

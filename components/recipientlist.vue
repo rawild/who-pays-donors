@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .recipientrow {
   max-height: 50px;
 }
@@ -124,10 +124,11 @@ export default {
 }
 .headerTable {
   border-bottom: 1px black solid;
+  width:98%;
 }
 
 .bodyTable tr:hover {
-  background-color: grey;
+  background-color:$primary-grey;
 }
 
 .bodyTable tr {

@@ -3,7 +3,10 @@
     <div v-if="candidateInfo.candidate" class="overlay" :info="candidateInfo">
       <div class="dialog">
         <div class="close">
-          <span class="closex" @click="sendClose"> x</span>
+          <v-icon class="closx" size="medium"  color="black" @click="sendClose">
+        mdi-close-circle
+        </v-icon>
+         <!-- <span class="closex" @click="sendClose"> x</span>-->
         </div>
         <div class="infobox">
           <div class="infoboxpadding">
