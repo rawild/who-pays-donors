@@ -2,15 +2,23 @@
   <v-app>
     <v-main>
       <v-container fluid>
-        <div class="break"> 
+        <div class="break">
           <NuxtLink to="/">
-          <v-icon size="60px" color="black" >
-        mdi-chevron-left
-        </v-icon> Back to List
+            <v-icon size="60px" color="black">
+              mdi-chevron-left
+            </v-icon>
+            Back to List
           </NuxtLink>
         </div>
-
         <controls :button="button" />
+        <div class="tabs flex-grid">
+        <div v-for="donor in donors" :key="donor.Cluster_ID">
+          <donortab 
+          :donor="donor" 
+          :selected="donor.Cluster_ID == donorFile.donor.Cluster_ID"
+          />
+        </div>
+        </div>
         <donorfile />
       </v-container>
     </v-main>
@@ -24,12 +32,20 @@ export default {
       button: "Open"
     };
   },
-  beforeMount() {
-    if (this.$store.state.donationsInfo.size == 0){
-      this.$store.dispatch('getDonorData')
+  computed: {
+    donors() {
+      return this.$store.state.donors.selected;
+    },
+    donorFile() {
+      return this.$store.state.file.donorFile;
     }
-    if (this.$store.state.candidateInfo.length == 0){
-      this.$store.dispatch('getCandidateData')
+  },
+  beforeMount() {
+    if (this.$store.state.donationsInfo.size == 0) {
+      this.$store.dispatch("getDonorData");
+    }
+    if (this.$store.state.candidateInfo.length == 0) {
+      this.$store.dispatch("getCandidateData");
     }
   },
   transition: {
@@ -49,7 +65,6 @@ export default {
   line-height: 1.2;
 }
 
-
 .links {
   padding-top: 15px;
 }
@@ -60,13 +75,13 @@ export default {
   height: 40px;
   padding: 20px;
   color: black;
-  font-family: 'Fjalla One', sans-serif;
+  font-family: "Fjalla One", sans-serif;
   font-size: 30px;
 }
 a {
   text-decoration: none;
   color: black !important;
-  cursor: pointer
+  cursor: pointer;
 }
 </style>
 <style lang="scss">
@@ -74,4 +89,10 @@ a {
   background-color: $primary-blue;
   color: $primary-tan;
 }
+.tabs {
+  text-align: left;
+  width: 100%;
+  margin-left: 6%;
+}
+
 </style>

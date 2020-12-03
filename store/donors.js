@@ -15,8 +15,9 @@ export const mutations = {
       state.queued = "";
     }
   },
-  removeSelected(state, id ) {
-    state.selected.splice(state.selected.indexOf(id), 1);
+  removeSelected(state, donor) {
+    console.log(donor)
+    state.selected.splice(state.selected.indexOf(donor), 1);
   },
   setOptionsfromDonorList(state, options) {
     state.options = options;

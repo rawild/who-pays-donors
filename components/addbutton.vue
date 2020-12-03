@@ -27,6 +27,7 @@ export default {
       this.$store.commit("donors/addQueued");
       } else if (this.type == "Open") {
         this.$store.dispatch("openDonorFile", this.donor)
+        this.$store.commit("donors/addQueued");
       }
     }
   }

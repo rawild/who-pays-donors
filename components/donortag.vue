@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     removeDonor() {
-      this.$emit("removeDonor",this.donor.Cluster_ID)
+      this.$emit("removeDonor",this.donor)
     },
     openDonorFile() {
       this.$store.dispatch("openDonorFile", this.donor)

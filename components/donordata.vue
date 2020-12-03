@@ -31,7 +31,7 @@
     </div>
     <div v-else class="candidate">
       <div class=candidatepadding>
-      Add donors below and hover over bars to view recipients
+      Add donors with search bar above and hover over the chart to view recipients
       </div>
     </div>
     <div

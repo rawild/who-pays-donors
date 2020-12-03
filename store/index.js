@@ -18,7 +18,6 @@ export const mutations = {
     state.candidateInfo = candidateInfo;
   },
   setDonationsInfo(state, donationsInfo) {
-    console.log("in setDonationsInfo", donationsInfo)
     state.donationsInfo = donationsInfo;
   }
 };
