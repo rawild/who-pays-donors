@@ -8,6 +8,7 @@
         @keydown.down="onArrowDown"
         @keydown.up="onArrowUp"
         @keydown.enter="onEnter"
+        placeholder=" Search for Donor"
       />
       <ul
         id="autocomplete-results"
@@ -161,6 +162,8 @@ export default {
   overflow: auto;
   width: 100%;
   background-color: white;
+  z-index: 2;
+  position: relative;
 }
 
 .autocomplete-result {
@@ -172,7 +175,7 @@ export default {
 .autocomplete input {
   margin: auto;
   width: 100%;
-  height: 90%;
+  height: 100%;
   padding-left: 5px;
 }
 

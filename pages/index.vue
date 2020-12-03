@@ -4,6 +4,9 @@
       <v-container fluid>
         <top />
         <div class="break" />
+        <textsection :header="topheader" :body="topbody"/>
+        <donortree />
+        <textsection :header="listheader" />
         <controls />
         <donordata />
       </v-container>
@@ -13,7 +16,20 @@
 
 <script>
 //import * as d3 from "d3";
-export default {};
+export default {
+    data() {
+      return {
+        topheader:"53,361 donors gave $104,006,269 to 86 candidates from 2015-2020",
+        topbody:"This is a database of the donations to the 86 state representatives who\
+         represent the five boroughs of New York City in Albany. \
+        Explore who they are and who they donated to below.",
+        listheader:"Create your own list of donors below to explore who donated to whom",
+      };
+    },
+    beforeMount() {
+    this.$store.dispatch('getCandidateData')
+  }
+};
 </script>
 
 <style>

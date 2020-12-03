@@ -17,21 +17,21 @@ export default {
 
 <style>
 .titleheader {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Fjalla One', sans-serif;
   display: block;
   font-weight: 500;
-  font-size: 6em;
-  color: #35495e;
+  font-size: 7em;
+  color: black;
   letter-spacing: 1px;
   padding-top: 80px;
 }
 
 .subheader {
-  font-weight: 300;
-  font-size: 42px;
+  font-weight: 500;
+  font-size: 36px;
   word-spacing: 5px;
   padding-bottom: 15px;
+  color: black;
 }
 
 </style>

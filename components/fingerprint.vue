@@ -99,7 +99,8 @@ export default {
         .attr("class",d =>"can"+d.candidate)
         .on("mouseover", e =>{
             d3.selectAll("."+e.srcElement.getAttribute("class"))
-            .classed("barHighlighted", true)         
+            .classed("barHighlighted", true)
+            this.$emit("candidate",e.srcElement.getAttribute("class"))         
         })
         .on("mouseout", e => {
             d3.selectAll(".barHighlighted")

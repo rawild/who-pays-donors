@@ -9,7 +9,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet',  href:"https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" }
+      { rel: 'stylesheet',  href:"https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" },
+      { rel: 'stylesheet', href:"https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap"}
     ]
   },
 

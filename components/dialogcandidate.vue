@@ -6,27 +6,29 @@
           <span class="closex" @click="sendClose"> x</span>
         </div>
         <div class="infobox">
-          <div class="text">
-            <h1>
-              {{
-                this.candidateInfo.candidate.First_Name +
-                  " " +
-                  this.candidateInfo.candidate.Last_Name
-              }}
-            </h1>
-            <div>
-              {{
-                this.candidateInfo.candidate.District === "Statewide"
-                  ? this.candidateInfo.candidate.Role
-                  : "District: " +
-                    this.candidateInfo.candidate.District +
-                    ", " +
-                    this.candidateInfo.candidate.County
-              }}
+          <div class="infoboxpadding">
+            <div class="text">
+              <div class="bold">
+                {{
+                  this.candidateInfo.candidate.First_Name +
+                    " " +
+                    this.candidateInfo.candidate.Last_Name
+                }}
+              </div>
+              <div>
+                {{
+                  this.candidateInfo.candidate.District === "Statewide"
+                    ? this.candidateInfo.candidate.Role
+                    : this.candidateInfo.candidate.Role + " District " +
+                      this.candidateInfo.candidate.District +
+                      ", " +
+                      this.candidateInfo.candidate.County
+                }}
+              </div>
+              <div>{{ "Total Receipts: $" + this.total }}</div>
             </div>
-            <div>{{ "Total Receipts: $" + this.total }}</div>
+            <svg class="dialogsvg" />
           </div>
-          <svg class="dialogsvg" />
         </div>
       </div>
     </div>
@@ -91,6 +93,7 @@ export default {
       let selector = ".dialogsvg";
       let svg = d3.select(selector);
       svg.selectAll(".barg").remove();
+
       // make an svg
       svg.attr("width", this.width).attr("height", this.height);
 
@@ -193,12 +196,7 @@ export default {
   left: 30%;
   text-align: left;
 }
-.infobox {
-  margin: auto;
-  max-height: 100%;
-  max-width: 100%;
-  padding: 30px;
-}
+
 .text {
   margin-bottom: 1em;
 }
@@ -233,16 +231,27 @@ export default {
 
 <style lang="scss">
 .dialog {
-  background-color: $primary-tan;
+  background-color: $primary-blue;
 }
 .close {
-  background-color: $primary-green;
-  color: $primary-tan;
+  background-color: $primary-tan;
+  color: $primary-blue;
+}
+.infobox {
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+  background-color: $primary-blue;
+  padding:30px;
+}
+.infoboxpadding{
+  padding: 30px;
+  background-color: $primary-grey;
 }
 </style>
 
 <style scoped>
 h1 {
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
 }
 </style>

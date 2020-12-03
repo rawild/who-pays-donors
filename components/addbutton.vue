@@ -1,5 +1,5 @@
 <template>
-  <input class="addbutton col" type="button" @click="onClick" :value="this.type" />
+  <input class="addbutton col" type="button" @click="onClick" :value="this.type + ' Donor'" />
 </template>
 
 <script>
@@ -37,10 +37,9 @@ export default {
 .addbutton {
   padding: 5px;
   margin: auto;
-  min-width: 30px;
-  max-width: 80px;
-  min-height: 46px;
-  max-height: 100px;
+  min-width: 100px;
+  max-width: 150px;
+  height: 50px;
   width: 5%;
   cursor: pointer;
 }

@@ -3,7 +3,8 @@ export const state = () => ({
   primaryblue: "#214167",
   donorslist: [],
   candidates: [],
-  candidateInfo: []
+  candidateInfo: [],
+  donationsInfo:[],
 });
 
 export const mutations = {
@@ -16,18 +17,18 @@ export const mutations = {
   setCandidateInfo(state, candidateInfo){
     state.candidateInfo = candidateInfo;
   },
-  getDonorData(state) {
-    d3.csv("/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
-      let candidates = Array.from(d3.group(donors, d => d.Candidate_ID).keys());
-      state.donorslist = donors;
-      state.candidates = candidates;
-    });
-  }
+  setDonationsInfo(state, donationsInfo){
+    state.donationsInfo = donationsInfo;
+  },
+  
 };
 
 export const getters = {
   getDonorName: state => id => {
     return state.donors.options.find(d => d.Cluster_ID == id).Donor;
+  },
+  getCandidateName: state => id => {
+    return state.candidateInfo.find(d => d.Elected_Id == id)
   },
   getDonorById: state => id => {
     let donor= state.donors.options.find(d => d.Cluster_ID == id)
@@ -49,7 +50,8 @@ export const getters = {
       v => d3.sum(v, d => d.Total),
       d => d.Cluster_ID
     );
-    let donor = { id: id, total: rollup.get(id), recipients: recipients.size };
+    let donorName = state.donors.options.find(d => d.Cluster_ID == id).Donor;
+    let donor = { id: id, total: rollup.get(id), recipients: recipients.size, name: donorName };
     return donor;
   },
   getCandidateInfoById: state => (id,donors) => {
@@ -107,9 +109,11 @@ export const getters = {
 };
 
 export const actions = {
-  getDonorData: ({ commit }) => {
+  getDonorData: ({ getters, commit }) => {
     d3.csv("/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
       commit("setDonors", donors);
+      let donationsInfo = getters.getDonationsInfo
+      commit("setDonationsInfo", donationsInfo)
     });
   },
   getCandidateData: ({ commit }) => {
@@ -122,10 +126,9 @@ export const actions = {
       commit("setCandidateInfo", candidateInfo);
     });
   },
-  openDonorFile: ({ getters, commit }, donor) => {
+  openDonorFile: ({ getters, commit, state }, donor) => {
     let contributions = getters.getDonorContributionsbyId(donor.Cluster_ID)
-    let donationsInfo = getters.getDonationsInfo
-    let donorArray = Array.from(donationsInfo)
+    let donorArray = Array.from(state.donationsInfo)
     donorArray.sort((a,b) => b[1].Total - a[1].Total)
     let totalRank = donorArray.findIndex((x)=>x[0]== donor.Cluster_ID)
     donorArray.sort((a,b) => b[1].average - a[1].average)
@@ -134,7 +137,6 @@ export const actions = {
     let donorFile = {
       donor: donor,
       contributions: contributions,
-      donationsInfo: donationsInfo,
       totalRank: totalRank,
       averageRank: averageRank,
       medianRecipients: medianRecipients

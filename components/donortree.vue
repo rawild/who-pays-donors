@@ -1,33 +1,21 @@
 <template>
-  <div class="donorsummary">
-    <div class="flex-grid">
-      <div class="left col">
-        {{ "Total Donated: $" + total }}
-        <br />
-        {{ "Average Donation: $" + average }}
+  <div class="treewrap section">
+      <div class="sectionheader">
+        Top 1000 Donors to New York City Reps in Albany (2015-2020)
       </div>
-      <div class="right col">
-        {{
-          "Total Donations Rank: " +
-            donorFile.totalRank +
-            "/" +
-            donorFile.donationsInfo.size
-        }}
-        <br />
-        {{
-          "Average Donations Rank: " +
-            donorFile.averageRank +
-            "/" +
-            donorFile.donationsInfo.size
-        }}
+      <div class="flex-grid">
+        <svg class="treemap" />
+        <div v-if="donor.name" class="donorinfo">
+          <div class="nestedinfo">
+            <div class="bold">{{ this.donor.name }}</div>
+            {{ "Total: $" + donor.total }}
+            <br />
+            {{ "To " + donor.recipients + " recipients" }}
+          </div>
+        </div>
+        <div v-else />
       </div>
-    </div>
-    <div class="donortreemap">
-        <div class="sectionheader">
-      Compared to all Donors:
-      </div>
-      <svg class="treemap" />
-    </div>
+   
   </div>
 </template>
 
@@ -37,57 +25,44 @@ export default {
   name: "donortree",
   data() {
     return {
-      width: 600,
-      height: 350
+      width: 800,
+      height: 250,
+      donor: {}
     };
   },
   watch: {
-    donorFile: function(){
-      this.drawTreemap()
-    }
-  },
-  props: {
-    donorFile: {
-      type: Object,
-      required: false,
-      default: {}
+    donationsInfo: function() {
+      this.drawTreemap();
     }
   },
   computed: {
-    total() {
-      if (this.donorFile.donor != null) {
-        let summary = this.donorFile.donationsInfo.get(
-          this.donorFile.donor.Cluster_ID
-        );
-        return d3.format(".4~s")(summary.total);
-      } else {
-        return 0;
-      }
-    },
-    average() {
-      if (this.donorFile.donor != null) {
-        let summary = this.donorFile.donationsInfo.get(
-          this.donorFile.donor.Cluster_ID
-        );
-        return d3.format(".4~s")(summary.average);
-      } else {
-        return 0;
-      }
+    donationsInfo() {
+      return this.$store.state.donationsInfo;
     }
   },
   methods: {
     drawTreemap() {
+      let sorted_donations = new Map(
+        [...this.donationsInfo.entries()].sort(
+          (a, b) => b[1].total - a[1].total
+        )
+      );
+      let top_1000_arr = Array.from(sorted_donations).slice(0, 1000);
+      let top_1000_map = new Map(top_1000_arr);
       let root = d3
-        .hierarchy(this.donorFile.donationsInfo, ([key, values]) => values)
+        .hierarchy(top_1000_map, ([key, values]) => values)
         .sum(([key, values]) => values.total)
         .sort((a, b) => b.value - a.value);
+
       let tree = d3
         .treemap()
         .size([this.width, this.height])
         .padding(1)
         .round(true);
       tree(root);
-      d3.select(".treemap").selectAll("g").remove()
+      d3.select(".treemap")
+        .selectAll("g")
+        .remove();
       let svg = d3
         .select(".treemap")
         .attr("width", this.width)
@@ -102,15 +77,31 @@ export default {
         .append("rect")
         .attr("width", d => d.x1 - d.x0)
         .attr("height", d => d.y1 - d.y0)
-        .attr("class", d =>
-          d.data[0] == this.donorFile.donor.Cluster_ID
-            ? "donortreesquare"
-            : "treesquare"
-        );
+        .attr("class", "treesquare")
+        .on("mouseover", e => {
+          let key = e.srcElement.__data__.data[0];
+          this.populateDonor(key);
+          e.srcElement.setAttribute("class", "rectHighlighted");
+        })
+        .on("mouseout", e => {
+          this.populateDonor("");
+          e.srcElement.setAttribute("class", "prevHighlighted");
+        });
+    },
+    populateDonor(donorId) {
+      if (donorId == "") {
+        this.donor = {};
+      } else {
+        this.donor = this.$store.getters.getDonorInfoById(donorId);
+        this.donor.total = d3.format(".4~s")(this.donor.total);
+      }
     }
   },
+  beforeMount() {
+    this.$store.dispatch("getDonorData");
+  },
   mounted() {
-    if (this.donorFile.donationsInfo != "") {
+    if (this.$store.state.donationsInfo != "") {
       this.drawTreemap();
     }
   }
@@ -122,24 +113,68 @@ export default {
   fill: $primary-green;
 }
 .treesquare {
-  fill: $primary-blue;
+  fill: $primary-grey;
 }
 .sectionheader {
-    text-align: left;
+  text-align: left;
+  color: $primary-grey;
+  padding: 20px;
+  background-color: $primary-blue;
+  width: 110%;
+  text-align: left;
+  font-weight: 500;
+  font-family: "Fjalla One", sans-serif;
+  font-size: 1.5em;
+}
+.treewrap {
+  margin-top:100px;
+}
+.rectHighlighted {
+  stroke: $primary-green;
+  stroke-width: 2;
+  fill: $primary-blue;
+  fill-opacity: 0.5;
+  cursor: pointer;
+}
+.prevHighlighted {
+  stroke: $primary-blue;
+  stroke-width: 2;
+  fill: $primary-green;
+  fill-opacity: 0.9;
+  cursor: pointer;
+}
+.donorinfo {
+  color: black;
+  margin-left: 40px;
+  padding: 40px;
+  width: 25%;
+  text-align: left;
+  background-color: $primary-tan;
+  height: 250px;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: inherit;
+}
+.nestedinfo {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.bold {
+  font-weight: bold;
+  font-size: 1.5em;
 }
 </style>
 
 <style>
-.donortreemap{
-  padding: 10px;
+.sectionpadding {
+  padding: 20px;
 }
-.sectionheader {
-    text-align: left;
-}
+  
+
 .left {
-    text-align: left;
+  text-align: left;
 }
 .right {
-    text-align: left;
+  text-align: left;
 }
 </style>

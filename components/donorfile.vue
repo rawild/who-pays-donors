@@ -2,7 +2,7 @@
   <div class="donorfile">
     <div v-if="donorFile.donor" info="donorFile.donor">
       <div class="donorname">File: {{ donorFile.donor.Donor }}</div>
-      <donortree :donorFile="this.donorFile" />
+      <donationsummary :donorFile="this.donorFile" />
       <recipientbar :donorFile="this.donorFile" />
       <recipientlist :donorFile="this.donorFile" />
     </div>
@@ -12,7 +12,9 @@
 
 <script>
 import { mapState } from "vuex";
+import donationsummary from './donationsummary.vue';
 export default {
+  components: { donationsummary },
   name: "donorfile",
   props: {
   },
@@ -32,10 +34,6 @@ export default {
     }
   },
   methods: {},
-  beforeMount() {
-    /*this.$store.dispatch("getCandidateData");
-    this.$store.dispatch("getDonorData");*/
-  }
 };
 </script>
 

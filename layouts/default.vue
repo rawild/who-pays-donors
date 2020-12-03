@@ -74,10 +74,10 @@ html {
   background-color: $primary-green;
 }
 .header {
-  margin-top: 0%;
+  margin-top: -1%;
   width: 95%;
   margin-left: 1%;
-  margin-right: -7%;
+  margin-right: -9%;
   flex-basis: 100%;
   min-height: 200px;
   min-width: 300px;
