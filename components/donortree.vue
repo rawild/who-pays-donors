@@ -1,7 +1,7 @@
 <template>
   <div class="treewrap section">
       <div class="sectionheader">
-        Top 1000 Donors to New York City Reps in Albany (2015-2020)
+        Top 1,000 Donors to New York City Reps in Albany (2015-2020)
       </div>
       <div class="flex-grid">
         <svg class="treemap" />
@@ -13,7 +13,11 @@
             {{ "To " + donor.recipients + " recipients" }}
           </div>
         </div>
-        <div v-else />
+        <div v-else class="donorinfo" >
+          <div class="nestedinfo">
+          These 1,000 donors gave $67,495,7773.42. That means just 1.9% of the donors gave almost 65% of the money. 
+          </div>
+          </div>
       </div>
    
   </div>
@@ -53,7 +57,7 @@ export default {
         .hierarchy(top_1000_map, ([key, values]) => values)
         .sum(([key, values]) => values.total)
         .sort((a, b) => b.value - a.value);
-
+      console.log(root)
       let tree = d3
         .treemap()
         .size([this.width, this.height])
@@ -158,6 +162,7 @@ export default {
 .nestedinfo {
   margin-top: auto;
   margin-bottom: auto;
+  font-weight: bold;
 }
 .bold {
   font-weight: bold;
