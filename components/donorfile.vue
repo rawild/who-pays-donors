@@ -1,5 +1,6 @@
 <template>
   <div class="donorfile">
+    <div v-if="donationsInfo.size > 0" >
     <div v-if="donorFile.donor" info="donorFile.donor">
       <div class="donorname">File: {{ donorFile.donor.Donor }}</div>
       <donationsummary :donorFile="this.donorFile" />
@@ -7,6 +8,8 @@
       <recipientlist :donorFile="this.donorFile" />
     </div>
     <div v-else></div>
+    </div>
+    <div v-else />
   </div>
 </template>
 
@@ -24,6 +27,9 @@ export default {
   computed: {
     donorFile() {
       return this.$store.state.file.donorFile;
+    },
+    donationsInfo(){
+      return this.$store.state.donationsInfo;
     },
     options() {
       if (this.$store.state.donors.options.length > 0) {

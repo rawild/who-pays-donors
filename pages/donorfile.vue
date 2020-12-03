@@ -24,6 +24,14 @@ export default {
       button: "Open"
     };
   },
+  beforeMount() {
+    if (this.$store.state.donationsInfo.size == 0){
+      this.$store.dispatch('getDonorData')
+    }
+    if (this.$store.state.candidateInfo.length == 0){
+      this.$store.dispatch('getCandidateData')
+    }
+  },
   transition: {
     name: "home"
   }

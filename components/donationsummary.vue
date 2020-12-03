@@ -7,18 +7,10 @@
         {{ "Average Donation: $" + average }}
       </div>
       <div class="right col">
-        {{
-          "Total Donations Rank: " +
-            donorFile.totalRank +
-            "/" +
-            totalDonors
-        }}
+        {{ "Total Donations Rank: " + donorFile.totalRank + "/" + totalDonors }}
         <br />
         {{
-          "Average Donations Rank: " +
-            donorFile.averageRank +
-            "/" +
-            totalDonors
+          "Average Donations Rank: " + donorFile.averageRank + "/" + totalDonors
         }}
       </div>
     </div>
@@ -40,43 +32,46 @@ export default {
       type: Object,
       required: false,
       default: {}
-    }
+    }   
   },
   computed: {
     total() {
-      if (this.donorFile.donor != null) {
-        let summary = this.$store.state.donationsInfo.get(
-          this.donorFile.donor.Cluster_ID
-        );
-        return d3.format(".4~s")(summary.total);
+      if ((this.donorFile.donor != null) && (this.donationsInfo.size >0)) {
+          let summary = this.donationsInfo.get(
+            this.donorFile.donor.Cluster_ID
+          );
+          return d3.format(".4~s")(summary.total);
       } else {
         return 0;
       }
     },
     average() {
-      if (this.donorFile.donor != null) {
-        let summary = this.$store.state.donationsInfo.get(
-          this.donorFile.donor.Cluster_ID
-        );
-        return d3.format(".4~s")(summary.average);
+      if ((this.donorFile.donor != null) && (this.donationsInfo.size >0)){
+          let summary = this.donationsInfo.get(
+            this.donorFile.donor.Cluster_ID
+          );
+          return d3.format(".4~s")(summary.average);
       } else {
         return 0;
       }
     },
     totalDonors() {
-      return this.$store.state.donationsInfo.size
+      if (this.donationsInfo != null){
+        return this.donationsInfo.size;
+      }
+    },
+    donationsInfo() {
+      return this.$store.state.donationsInfo;
     }
   },
 };
 </script>
 
-
-
 <style>
 .left {
-    text-align: left;
+  text-align: left;
 }
 .right {
-    text-align: left;
+  text-align: left;
 }
 </style>

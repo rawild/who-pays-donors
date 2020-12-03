@@ -130,7 +130,9 @@ export default {
         .attr("width", () => xScale.bandwidth())
         .attr("height", d => yScale(d[0]) - yScale(d[1]))
         .attr("amount", d => d[1]-d[0])
+        .attr("year", d => d.data[0])
         .on("mouseover", e => {
+          console.log(e)
           let key = e.srcElement.parentElement.__data__.key;
           this.populateCandidate(key, e.srcElement.getAttribute("amount"));
           d3.selectAll(".candidate" + key).classed("barHighlighted", true);

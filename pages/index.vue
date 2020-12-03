@@ -28,6 +28,7 @@ export default {
     },
     beforeMount() {
     this.$store.dispatch('getCandidateData')
+    this.$store.dispatch('getDonorData')
   }
 };
 </script>

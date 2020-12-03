@@ -30,7 +30,9 @@
       </div>
     </div>
     <div v-else class="candidate">
+      <div class=candidatepadding>
       Add donors below and hover over bars to view recipients
+      </div>
     </div>
     <div
       class="donorlist"
@@ -110,5 +112,11 @@ export default {
   margin-bottom: 10px;
   text-align: left;
   padding: 5px;
+  display: inline-flex;
+}
+.candidatepadding {
+  margin-top:auto;
+  margin-bottom: auto;
+  text-align: left;
 }
 </style>
