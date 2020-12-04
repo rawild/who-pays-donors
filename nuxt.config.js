@@ -1,7 +1,7 @@
 export default {
   target: 'static',
   router: {
-    base: '/who-pays-donors/dist/'
+    base: '/who-pays-donors/'
   },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
