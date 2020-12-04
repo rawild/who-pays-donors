@@ -1,1 +1,0 @@
-window.__NUXT__={staticAssetsBase:"\u002F_nuxt\u002Fstatic\u002F1607044763",layout:"default",error:null,state:{primaryblue:"#214167",donorslist:[],candidates:[],candidateInfo:[],donationsInfo:new Map([]),donors:{selected:[],options:[],queued:""},file:{donorFile:{}},year:{range:[]}},serverRendered:true,routePath:"\u002F",config:{content:{dbHash:"e646d648"}}};

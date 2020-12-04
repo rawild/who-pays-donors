@@ -26,7 +26,7 @@ export const mutations = {
 
 export const actions ={
     loadOptions: ({commit}) => {
-        d3.csv("/donors_15-20.csv", d3.autoType).then(donors => {
+        d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/donors_15-20.csv", d3.autoType).then(donors => {
             commit("setOptionsfromDonorList",donors)
           });
     }

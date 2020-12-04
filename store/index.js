@@ -118,14 +118,14 @@ export const getters = {
 
 export const actions = {
   getDonorData: ({ getters, commit }) => {
-    d3.csv("/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
+    d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
       commit("setDonors", donors);
       let donationsInfo = getters.getDonationsInfo;
       commit("setDonationsInfo", donationsInfo);
     });
   },
   getCandidateData: ({ commit }) => {
-    d3.csv("/Electeds_List_05_13.csv", d3.autoType).then(candidateInfo => {
+    d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/Electeds_List_05_13.csv", d3.autoType).then(candidateInfo => {
       let candidates = Array.from(
         d3.group(candidateInfo, d => d.Elected_Id).keys()
       );
