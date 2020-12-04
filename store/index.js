@@ -118,7 +118,9 @@ export const getters = {
 
 export const actions = {
   getDonorData: ({ getters, commit }) => {
+    console.log("in get donor data")
     d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
+      console.log('donors loaded', donors)
       commit("setDonors", donors);
       let donationsInfo = getters.getDonationsInfo;
       commit("setDonationsInfo", donationsInfo);
