@@ -1,9 +1,12 @@
 import * as d3 from "d3";
+import donorsList from "~/static/summarized_year_filings_15-20.json";
+import candidateInfo from "~/static/Electeds_List_05_13.json";
+
 export const state = () => ({
   primaryblue: "#214167",
-  donorslist: [],
+  donorslist: donorsList,
   candidates: [],
-  candidateInfo: [],
+  candidateInfo: candidateInfo,
   donationsInfo: new Map([]),
 });
 
@@ -118,25 +121,17 @@ export const getters = {
 
 export const actions = {
   getDonorData: ({ getters, commit }) => {
-    console.log("in get donor data")
-    d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/summarized_year_filings_15-20.csv", d3.autoType).then(donors => {
-      console.log('donors loaded', donors)
-      commit("setDonors", donors);
-      let donationsInfo = getters.getDonationsInfo;
-      commit("setDonationsInfo", donationsInfo);
-    });
+    let donationsInfo = getters.getDonationsInfo;
+    commit("setDonationsInfo", donationsInfo);
   },
-  getCandidateData: ({ commit }) => {
-    d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/Electeds_List_05_13.csv", d3.autoType).then(candidateInfo => {
-      let candidates = Array.from(
-        d3.group(candidateInfo, d => d.Elected_Id).keys()
-      );
-      candidates.sort(d3.ascending);
-      commit("setCandidates", candidates);
-      commit("setCandidateInfo", candidateInfo);
-    });
+  getCandidateData: ({ commit,state }) => {
+    let candidates = Array.from(
+      d3.group(state.candidateInfo, d => d.Elected_Id).keys()
+    );
+    candidates.sort(d3.ascending);
+    commit("setCandidates", candidates);
   },
-  openDonorFile: ({ getters, commit, dispatch, state }, donor) => {
+  openDonorFile: ({ getters, commit, state }, donor) => {
     let contributions = getters.getDonorContributionsbyId(donor.Cluster_ID);
 
       let donorArray = Array.from(state.donationsInfo);

@@ -1,7 +1,8 @@
-import * as d3 from 'd3'
+import * as d3 from 'd3';
+import donorOptions from '~/static/donors_15-20.json'
 export const state = () => ({
   selected: [],
-  options: [],
+  options: donorOptions,
   queued: ""
 });
 
@@ -25,9 +26,5 @@ export const mutations = {
 };
 
 export const actions ={
-    loadOptions: ({commit}) => {
-        d3.csv("https://raw.githubusercontent.com/rawild/who-pays-donors/main/static/donors_15-20.csv", d3.autoType).then(donors => {
-            commit("setOptionsfromDonorList",donors)
-          });
-    }
+  
 }

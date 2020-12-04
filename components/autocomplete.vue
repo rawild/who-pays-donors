@@ -129,7 +129,7 @@ export default {
     }
   },
   beforeMount() {
-    this.$store.dispatch("donors/loadOptions");
+   // this.$store.dispatch("donors/loadOptions");
   },
   mounted() {
     document.addEventListener("click", this.handleClickOutside);

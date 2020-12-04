@@ -168,6 +168,11 @@ export default {
     
     
   },
+  beforeMount(){
+    if (this.$store.state.candidates.length == 0){
+      this.$store.dispatch("getCandidateData")
+    }
+  },
   mounted() {
     this.drawFingerprint();
   },
