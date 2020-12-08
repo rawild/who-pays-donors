@@ -106,7 +106,7 @@ export default {
   min-height: 400px;
 }
 .candidate {
-  min-height: 50px;
+  min-height: 100px;
   width: 100%;
   background-color: $primary-grey;
   margin-bottom: 10px;
@@ -118,5 +118,6 @@ export default {
   margin-top:auto;
   margin-bottom: auto;
   text-align: left;
+  padding-left: 10px;
 }
 </style>
