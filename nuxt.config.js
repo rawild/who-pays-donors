@@ -14,11 +14,13 @@ export default {
     ]
   },
 
-  server: {
+  /*server: {
     port: 8080, // default: 3000
     host: '0.0.0.0' // default: localhost
-  },  
-
+  },*/  
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
   ],
