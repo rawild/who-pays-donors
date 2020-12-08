@@ -52,7 +52,7 @@ export default {
         .hierarchy(top_1000_map, ([key, values]) => values)
         .sum(([key, values]) => values.total)
         .sort((a, b) => b.value - a.value);
-      console.log(root)
+
       let tree = d3
         .treemap()
         .size([this.width, this.height])
