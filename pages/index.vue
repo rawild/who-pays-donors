@@ -29,7 +29,7 @@ export default {
     async asyncData({$content,store}) {
       //const donorList = await $http.$get("https://raw.githubusercontent.com/rawild/who-pays-donors/deployed/static/summarized_year_filings_15-20.json")
       const donorList = await $content('donorList', 'filings').fetch()
-      store.commit("setDonorsObj", donorList)
+      store.commit("setDonors", donorList)
     },
     beforeMount() {
      if (this.$store.state.donationsInfo.size == 0) {

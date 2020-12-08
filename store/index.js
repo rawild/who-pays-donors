@@ -5,7 +5,7 @@ import candidateInfo from "~/static/Electeds_List_05_13.json";
 export const state = () => ({
   primaryblue: "#214167",
   primarygrey: "#EDEEF3",
-  donorslist: [],
+  donorslist: {},
   candidates: [],
   candidateInfo: candidateInfo,
   donationsInfo: new Map([]),
@@ -41,7 +41,7 @@ export const getters = {
     return donor;
   },
   getDonorInfoById: state => id => {
-    let contributions = state.donorslist.filter(d => d.Cluster_ID == id);
+    let contributions = state.donorslist.data.filter(d => d.Cluster_ID == id);
     contributions = contributions.filter(d => {
       if (d.Contribution_Year >= state.year.range[0]) {
         if (d.Contribution_Year <= state.year.range[1]) {
@@ -71,7 +71,7 @@ export const getters = {
     }
     let candidate = state.candidateInfo.filter(d => d.Elected_Id == id)[0];
     let selectedDonors = donors.map(d => d.Cluster_ID);
-    let contributions = state.donorslist.filter(d => {
+    let contributions = state.donorslist.data.filter(d => {
       return selectedDonors.includes(d.Cluster_ID);
     });
     contributions = contributions.filter(d => d.Candidate_ID == id);
@@ -101,12 +101,12 @@ export const getters = {
     return candidateInfo;
   },
   getDonorContributionsbyId: state => id => {
-    let contributions = state.donorslist.filter(d => d.Cluster_ID == id);
+    let contributions = state.donorslist.data.filter(d => d.Cluster_ID == id);
     return contributions;
   },
   getDonationsInfo: state => {
     let donationsInfo = d3.rollup(
-      state.donorslist,
+      state.donorslist.data,
       v => {
         let total = d3.sum(v, d => d.Total);
         let average = d3.mean(v, d => d.Total);
