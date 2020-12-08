@@ -26,8 +26,9 @@ export default {
         listheader:"Create your own list of donors below to explore who donated to whom",
       };
     },
-    async asyncData({$http, store}) {
-      const donorList = await $http.$get("https://raw.githubusercontent.com/rawild/who-pays-donors/deployed/static/summarized_year_filings_15-20.json")
+    async asyncData({$content,store}) {
+      //const donorList = await $http.$get("https://raw.githubusercontent.com/rawild/who-pays-donors/deployed/static/summarized_year_filings_15-20.json")
+      const donorList = await $content('donorList', 'filings').fetch()
       store.commit("setDonorsObj", donorList)
     },
     beforeMount() {
