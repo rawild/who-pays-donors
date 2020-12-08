@@ -15,7 +15,7 @@
 </template>
 
 <script>
-//import * as d3 from "d3";
+import * as d3 from "d3";
 export default {
     data() {
       return {
@@ -25,6 +25,10 @@ export default {
         Explore who they are and who they donated to below.",
         listheader:"Create your own list of donors below to explore who donated to whom",
       };
+    },
+    async asyncData({$http, store}) {
+      const donorList = await $http.$get("https://raw.githubusercontent.com/rawild/who-pays-donors/deployed/static/summarized_year_filings_15-20.json")
+      store.commit("setDonors", donorList)
     },
     beforeMount() {
      if (this.$store.state.donationsInfo.size == 0) {

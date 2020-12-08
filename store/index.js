@@ -1,11 +1,11 @@
 import * as d3 from "d3";
-import donorsList from "~/static/summarized_year_filings_15-20.json";
+//import donorsList from "~/static/summarized_year_filings_15-20.json";
 import candidateInfo from "~/static/Electeds_List_05_13.json";
 
 export const state = () => ({
   primaryblue: "#214167",
   primarygrey: "#EDEEF3",
-  donorslist: donorsList,
+  donorslist: [],
   candidates: [],
   candidateInfo: candidateInfo,
   donationsInfo: new Map([]),
