@@ -196,7 +196,7 @@ export default {
         }
 
     .donorlist {
-      background-color: $primary-grey;
+      background-color: $primary-tan;
       padding: 10px;
       border-radius: 15px;
       overflow: auto;

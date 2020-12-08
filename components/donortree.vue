@@ -1,7 +1,7 @@
 <template>
   <div class="treewrap section">
       <div class="sectionheader">
-        Top 1,000 Donors to New York City Reps in Albany (2015-2020)
+        The Top 1,000 Donors to New York City Reps in Albany Gave almost $67.5 Million.
       </div>
       <div class="flex-grid">
         <svg class="treemap" />
@@ -15,7 +15,7 @@
         </div>
         <div v-else class="donorinfo" >
           <div class="nestedinfo">
-          These 1,000 donors gave $67,495,7773.42. That means just 1.9% of the donors gave almost 65% of the money. 
+          That means just 1.9% of the donors gave almost 65% of the money. Mouse over the squares to see who they are.
           </div>
           </div>
       </div>
@@ -46,12 +46,7 @@ export default {
   },
   methods: {
     drawTreemap() {
-      let sorted_donations = new Map(
-        [...this.donationsInfo.entries()].sort(
-          (a, b) => b[1].total - a[1].total
-        )
-      );
-      let top_1000_arr = Array.from(sorted_donations).slice(0, 1000);
+      let top_1000_arr = Array.from(this.donationsInfo).slice(0, 1000);
       let top_1000_map = new Map(top_1000_arr);
       let root = d3
         .hierarchy(top_1000_map, ([key, values]) => values)
@@ -122,7 +117,7 @@ export default {
 .sectionheader {
   text-align: left;
   color: $primary-grey;
-  padding: 20px;
+  padding-bottom: 20px;
   background-color: $primary-blue;
   width: 110%;
   text-align: left;

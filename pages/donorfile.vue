@@ -3,8 +3,8 @@
     <v-main>
       <v-container fluid>
         <div class="break">
-          <NuxtLink to="/">
-            <v-icon size="60px" color="black">
+          <NuxtLink class="navButton" to="/">
+            <v-icon size="60px" >
               mdi-chevron-left
             </v-icon>
             Back to List
@@ -38,6 +38,9 @@ export default {
     },
     donorFile() {
       return this.$store.state.file.donorFile;
+    },
+    primaryGrey() {
+      return this.$store.state.primaryGrey;
     }
   },
   beforeMount() {
@@ -78,21 +81,29 @@ export default {
   font-family: "Fjalla One", sans-serif;
   font-size: 30px;
 }
-a {
-  text-decoration: none;
-  color: black !important;
-  cursor: pointer;
-}
+
 </style>
-<style lang="scss">
-.dark {
-  background-color: $primary-blue;
-  color: $primary-tan;
-}
+<style lang="scss" scoped>
+
 .tabs {
   text-align: left;
   width: 100%;
   margin-left: 6%;
 }
-
+.navButton {
+  color: $primary-grey !important;
+  background-color: $primary-blue;
+  padding-top: 11px;
+  padding-right: 20px;
+  padding-bottom: 13px;
+}
+a {
+  text-decoration: none;
+  color: $primary-grey !important;
+  cursor: pointer;
+}
+i {
+  color: $primary-grey !important;
+  background-color: $primary-blue !important;
+}
 </style>

@@ -4,6 +4,7 @@ import candidateInfo from "~/static/Electeds_List_05_13.json";
 
 export const state = () => ({
   primaryblue: "#214167",
+  primarygrey: "#EDEEF3",
   donorslist: donorsList,
   candidates: [],
   candidateInfo: candidateInfo,
@@ -115,7 +116,12 @@ export const getters = {
       },
       d => d.Cluster_ID
     );
-    return donationsInfo;
+    let sorted_donations = new Map(
+      [...donationsInfo.entries()].sort(
+        (a, b) => b[1].total - a[1].total
+      )
+    );
+    return sorted_donations;
   }
 };
 
@@ -133,7 +139,6 @@ export const actions = {
   },
   openDonorFile: ({ getters, commit, state }, donor) => {
     let contributions = getters.getDonorContributionsbyId(donor.Cluster_ID);
-
       let donorArray = Array.from(state.donationsInfo);
       donorArray.sort((a, b) => b[1].Total - a[1].Total);
       let totalRank = donorArray.findIndex(x => x[0] == donor.Cluster_ID);
