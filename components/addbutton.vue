@@ -1,5 +1,5 @@
 <template>
-  <input class="addbutton col" type="button" @click="onClick" :value="this.type + ' Donor'" />
+  <input class="addbutton" type="button" @click="onClick" :value="this.type + ' Donor'" />
 </template>
 
 <script>
