@@ -15,6 +15,9 @@ export const mutations = {
   setDonors(state, donorsObj) {
     state.donorslist = donorsObj;
   },
+  setDonorsObj(state, donorsObj) {
+    state.donorslist = donorsObj.data
+  },
   setCandidates(state, candidates) {
     state.candidates = candidates;
   },
