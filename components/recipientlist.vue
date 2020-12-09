@@ -63,7 +63,7 @@ export default {
         "Position",
         "Total Recieved",
         "Max Amount",
-        "Number of Donations"
+        "Number of Years Donated"
       ];
       d3.select(".recipientlist").select("table").remove()
       //Adapted from http://forrestcoward.github.io/examples/scrollable-table/index.html

@@ -38,8 +38,8 @@ export default {
 .addbutton {
   padding: 5px;
   margin: auto;
-  min-width: 100px;
-  max-width: 150px;
+  min-width: 120px;
+  max-width: 170px;
   height: 50px;
   width: 5%;
   cursor: pointer;

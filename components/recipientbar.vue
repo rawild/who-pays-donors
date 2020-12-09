@@ -169,11 +169,11 @@ export default {
 
 <style scoped>
 .recipientbar {
-  width: 70%;
+  width: 65%;
   text-align: left
 }
 .recipientinfo {
-  width: 30%;
+  width: 45%;
   text-align: left;
 }
 
