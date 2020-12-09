@@ -17,6 +17,9 @@ export default {
   watch: {
     donorFile: function(){
       this.drawTable()
+    },
+    yearrange: function(){
+      this.drawTable()
     }
   },
   props: {
@@ -24,13 +27,25 @@ export default {
       type: Object,
       required: false,
       default: {}
+    }, 
+  },
+  computed: {
+    yearrange() {
+      return this.$store.state.year.range
     }
   },
   methods: {
     drawTable() {
       let width = this.width;
+      let contributions = this.donorFile.contributions.filter(d => {
+        if (d.Contribution_Year >= this.yearrange[0]) {
+          if (d.Contribution_Year <= this.yearrange[1]) {
+            return true;
+          }
+        }
+      })
       let contributionsRollup = d3.rollups(
-        this.donorFile.contributions,
+        contributions,
         v => {
           return [d3.sum(v, d => d.Total), d3.max(v, d => d.Total), v.length];
         },

@@ -61,7 +61,7 @@ export default {
       }
     },
     donationsInfo() {
-      return this.$store.state.donationsInfo;
+      return this.$store.getters.getDonationsInfoinYears;
     }
   },
 };

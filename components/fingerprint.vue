@@ -1,5 +1,5 @@
 <template>
-  <div :class="divClass" :info="yearrange"></div>
+  <div :class="divClass" ></div>
 </template>
 
 <script>
@@ -26,6 +26,11 @@ export default {
       x: "",
       y: ""
     };
+  },
+  watch: {
+    yearrange: function() {
+      this.updateFingerprint();
+    }
   },
   computed: mapState({
     yearrange: state => state.year.range,

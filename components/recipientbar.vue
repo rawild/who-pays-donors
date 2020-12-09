@@ -43,6 +43,9 @@ export default {
   watch: {
     donorFile: function(){
       this.drawRecipientBar()
+    },
+    yearrange: function(){
+      this.drawRecipientBar()
     }
   },
   props: {
@@ -54,7 +57,14 @@ export default {
   },
   computed: {
     recipients() {
-      return d3.group(this.donorFile.contributions, d => d.Candidate_ID).size;
+      let contributions = this.donorFile.contributions.filter(d => {
+        if (d.Contribution_Year >= this.yearrange[0]) {
+          if (d.Contribution_Year <= this.yearrange[1]) {
+            return true;
+          }
+        }
+      })
+      return d3.group(contributions, d => d.Candidate_ID).size;
     },
     medianRecipients() {
       if (this.recipients > this.donorFile.medianRecipients) {
@@ -71,17 +81,28 @@ export default {
     },
     primaryblue() {
       return this.$store.state.primaryblue;
+    },
+    yearrange() {
+      return this.$store.state.year.range
     }
   },
   methods: {
     drawRecipientBar() {
       let margin = 20;
+      let contributions = this.donorFile.contributions.filter(d => {
+        if (d.Contribution_Year >= this.yearrange[0]) {
+          if (d.Contribution_Year <= this.yearrange[1]) {
+            return true;
+          }
+        }
+      })
       let contributionsRollup = d3.rollup(
-        this.donorFile.contributions,
+        contributions,
         v => d3.sum(v, d => d.Total),
         d => d.Contribution_Year,
         d => d.Candidate_ID
       );
+
       var keys = d3.range(1, 97);
       let stackedContributions = d3
         .stack()

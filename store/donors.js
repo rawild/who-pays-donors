@@ -1,4 +1,3 @@
-import * as d3 from 'd3';
 import donorOptions from '~/static/donors_15-20.json'
 export const state = () => ({
   selected: [],

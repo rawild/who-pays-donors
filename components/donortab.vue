@@ -1,8 +1,11 @@
 <template>
-  <div class="tab" :class="{'selected': this.selected }" @click="openDonor(donor)">
-    <div class="textalign">
+  <div class="tab" :class="{'selected': this.selected }" >
+    <div class="textalign" @click="openDonor(donor)">
       {{ donor.Donor }}
     </div>
+    <v-icon class="closx " size="medium"  color="black" @click="closeDonor(donor)">
+        mdi-close-circle
+    </v-icon>
   </div>
 </template>
 <script>
@@ -22,6 +25,9 @@ export default {
   methods:{
     openDonor(donor){
       this.$store.dispatch("openDonorFile", donor)
+    },
+    closeDonor(donor){
+      this.$store.dispatch("closeDonorFile", donor)
     }
   },
 };
@@ -39,16 +45,20 @@ export default {
   border-top: 2px solid black;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  cursor: pointer;
+
   opacity: .7;
   
 }
 .textalign {
   margin: auto;
+  cursor: pointer;
 }
 .selected {
   border-bottom: none;
   cursor: default;
   opacity: 1;
+}
+.closx{
+  margin-left: 7px;
 }
 </style>
