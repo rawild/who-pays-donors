@@ -209,7 +209,7 @@ export default {
   stroke: $primary-green;
   stroke-width: 3;
   fill: $primary-green;
-  fill-opacity: 0.5;
+  //fill-opacity: 0.5;
   cursor: pointer;
 }
 </style>

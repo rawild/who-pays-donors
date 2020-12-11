@@ -60,12 +60,13 @@ export default {
 
 <style scoped>
 .donortag {
-  width: 30%;
+  width: 25%;
   text-align: left;
   display:flex;
 }
 .left {
   padding-right: 15px;
+  padding-left: 5px;
   padding-top: 2px;
   max-width:100px;
 }

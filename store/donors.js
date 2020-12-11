@@ -11,7 +11,9 @@ export const mutations = {
   },
   addQueued(state) {
     if (state.queued) {
-      state.selected.push(state.queued);
+      if(state.selected.indexOf(state.queued) =="-1"){
+        state.selected.push(state.queued);
+      }   
       state.queued = "";
     }
   },
