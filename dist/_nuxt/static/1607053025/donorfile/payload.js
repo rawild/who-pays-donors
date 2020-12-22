@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/donorfile", {data:[{}],fetch:[],mutations:[]});

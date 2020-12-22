@@ -57,7 +57,6 @@ export default {
         }
         return false;
       });
-      console.log("candidates",this.candidateInfo)
       // sum from the years
       data = d3.rollup(
         data,

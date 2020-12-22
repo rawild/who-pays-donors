@@ -81,10 +81,12 @@ export default {
     drawBar() {
       let barSpace = 35;
       let width = (this.width - barSpace * 2) / 2;
+      let donors = d3.map(this.candidateInfo.donors, d => d.donor.Donor)
+    
       this.y = d3
         .scaleBand()
         .domain(d3.map(this.candidateInfo.donors, d => d.donor.Donor))
-        .rangeRound([this.height, 0])
+        .rangeRound([0,this.height])
         .paddingInner(0.1);
 
       this.x = d3

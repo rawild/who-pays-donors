@@ -1,3 +1,4 @@
+<!-- this is heavily based off of https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component -->
 <template>
   <div class="searchbar flex-grid">
     <div class="autocomplete col">

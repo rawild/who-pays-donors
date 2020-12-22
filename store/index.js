@@ -85,6 +85,7 @@ export const getters = {
       d => d.Cluster_ID
     );
     let candidateInfo = { candidate: candidate, donors: [] };
+    let donorsInfo = []
     for (let [key, value] of rollup) {
       let donor = state.donors.options.filter(d => d.Cluster_ID == key);
       if (donor.length > 0) {
@@ -92,7 +93,13 @@ export const getters = {
           donor: donor[0],
           total: value
         };
-        candidateInfo.donors.push(info);
+        donorsInfo.push(info);
+      }
+    }
+    for (let donor of donors) {
+      let info = donorsInfo.find((d) => d.donor.Cluster_ID == donor.Cluster_ID)
+      if (info != undefined) {
+        candidateInfo.donors.push(info)
       }
     }
     return candidateInfo;

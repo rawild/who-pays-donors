@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <v-container fluid>
-        <top />
+        <top :linkTo="this.linkTo" :linkText="this.linkText"/>
         <div class="break" />
         <textsection :header="topheader" :body="topbody"/>
         <donortree />
@@ -24,6 +24,8 @@ export default {
          represent the five boroughs of New York City in Albany. \
         Explore who they are and who they donated to below.",
         listheader:"Create your own list of donors below to explore who donated to whom",
+        linkTo: "/about",
+        linkText: "More about this data"
       };
     },
     beforeMount() {

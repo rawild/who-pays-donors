@@ -5,17 +5,30 @@
           </h1>
           <div class="subheader">
             Explore New York City Political Donors
-            </div>
+          </div>
+          <div>
+             <NuxtLink :to="linkTo">{{linkText}}</NuxtLink>
+          </div>
         </div>
 </template>
 
 <script>
 export default {
-    name: "top"
+    name: "top",
+    props: {
+      linkTo: {
+        type: String,
+        required: false
+      },
+      linkText: {
+        type: String,
+        required: false
+      }
+    }
 }
 </script>
 
-<style>
+<style lang="scss">
 .titleheader {
   font-family: 'Fjalla One', sans-serif;
   display: block;
@@ -34,4 +47,10 @@ export default {
   color: black;
 }
 
+a {
+  text-decoration: none;
+  color: black !important;
+  cursor: pointer;
+  padding-bottom: 10px;
+}
 </style>

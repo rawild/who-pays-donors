@@ -18,7 +18,6 @@ export const mutations = {
     }
   },
   removeSelected(state, donor) {
-    console.log(donor)
     state.selected.splice(state.selected.indexOf(donor), 1);
   },
   setOptionsfromDonorList(state, options) {
