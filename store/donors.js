@@ -1,4 +1,4 @@
-import donorOptions from '~/static/donors_15-20.json'
+import donorOptions from '~/static/donors_16-20.json'
 export const state = () => ({
   selected: [],
   options: donorOptions,

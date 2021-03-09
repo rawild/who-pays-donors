@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import donorsList from "~/static/summarized_year_filings_15-20.json";
-import candidateInfo from "~/static/Electeds_List_05_13.json";
+import donorsList from "~/static/summarized_year_filings_16-20.json";
+import candidateInfo from "~/static/Electeds_List.json";
 
 export const state = () => ({
   primaryblue: "#214167",
