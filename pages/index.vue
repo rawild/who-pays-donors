@@ -19,7 +19,7 @@
 export default {
     data() {
       return {
-        topheader:"70,382 donors gave $93,964,888 to 96 candidates from 2016-2020",
+        topheader:"64,116 donors gave $72,974,075 to 96 candidates from 2017-Jan 2022",
         topbody:"This is a database of the donations to the 96 state representatives who\
          represent the five boroughs of New York City in Albany. \
         Explore who they are and who they donated to below.",

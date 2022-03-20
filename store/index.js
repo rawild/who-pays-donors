@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import donorsList from "~/static/summarized_year_filings_16-20.json";
+import donorsList from "~/static/summarized_year_filings_donor_17-Jan2022.json";
 import candidateInfo from "~/static/Electeds_List.json";
 
 export const state = () => ({

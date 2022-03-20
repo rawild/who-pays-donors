@@ -20,7 +20,7 @@ export default {
         topheader:"About this data",
         topbody:"The donation data comes from the New York State Board of Elections reports.\
           The donations include those filed for \
-         the current politicians and their committees from January 2016 through December 2020. \
+         the current politicians and their committees from January 2017 through January 2022. \
          The candidates included are those politicians that currently represent \
          the five boroughs in the State Senate and Assembly, plus the majority leader of the senate, \
          Andrea Stewart Cousins, and the four statewide positions: governor, lieutenant governor, \

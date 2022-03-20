@@ -1,7 +1,7 @@
 <template>
   <div class="treewrap section">
       <div class="sectionheader">
-        The Top 1,000 Donors to New York City Reps in Albany Gave almost $55.3 Million.
+        The Top 1,000 Donors to New York City Reps in Albany Gave $42.8 Million.
       </div>
       <div class="flex-grid">
         <svg class="treemap" />
@@ -15,7 +15,7 @@
         </div>
         <div v-else class="donorinfo" >
           <div class="nestedinfo">
-          That means just 1.4% of the donors gave almost 59% of the money. Mouse over the squares to see who they are.
+          That means just 1.6% of the donors gave almost 57% of the money. Mouse over the squares to see who they are.
           </div>
           </div>
       </div>
